@@ -9,7 +9,6 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@mobiscroll/react": "https://npm.mobiscroll.com/@mobiscroll/react-trial/-/react-trial-5.22.1.tgz",
         "@next/font": "13.1.6",
         "@prisma/client": "^4.11.0",
         "@syncfusion/ej2-base": "^20.4.51",
