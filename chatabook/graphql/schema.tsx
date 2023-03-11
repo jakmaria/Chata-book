@@ -1,25 +1,26 @@
 import gql from 'graphql-tag';
 
-// export const typeDefs = gql`
-// type Event {
-// id: Number
-// user: String
-// occassion: String
-// start: String
-// end: String
-// people: Number
-// whole: Boolean
-// appartments: Number
-// message: String?
-// }
+export const typeDefs = gql`
+  type User {
+    id: Int
+    name: String
+    surname: String
+  }
 
-// type Query {
-//     events: [Event]!
-// }
-// `;
+  type Event {
+    id: Int
+    user: User
+    userId: Int
+    occassion: String
+    start: String
+    end: String
+    people: Int
+    whole: Boolean
+    appartments: Int
+    message: String
+  }
 
-// export const typeDefs = gql`
-//   type Query {
-//     hello: String
-//   }
-// `;
+  type Query {
+    events: [Event]!
+  }
+`;

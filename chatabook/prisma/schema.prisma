@@ -21,8 +21,8 @@ events Event[]
 
 model Event {
 id          Int   @default(autoincrement()) @id
-user        User  @relation(fields: [userId], references: [id])
-userId      Int @unique
+user        User  @relation(fields: [userId], references: [id]) 
+userId      Int 
 occassion   String
 start       DateTime @db.Date
 end         DateTime @db.Date
@@ -30,5 +30,7 @@ people      Int
 whole       Boolean
 appartments Int?
 message     String?
+
+@@index([userId])
 }
 

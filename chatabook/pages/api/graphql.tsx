@@ -1,41 +1,37 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
-import { gql } from 'graphql-tag';
+import { createSchema, createYoga } from 'graphql-yoga'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { resolvers } from '@/graphql/resolvers';
+import { typeDefs } from '@/graphql/schema';
 
 
-const resolvers = {
-    Query:{
-        events: () => [],
+export default createYoga<{
+    req: NextApiRequest
+    res: NextApiResponse
+  }>({
+    schema: createSchema({
+      typeDefs,
+      resolvers
+    }),
+    graphqlEndpoint: '/api/graphql'
+  })
+  
+  export const config = {
+    api: {
+      bodyParser: false
     }
-};
+  }
 
-const typeDefs = gql`
-  type Event {
-id: Int
-user: String
-occassion: String
-start: String
-end: String
-people: Int
-whole: Boolean
-appartments: Int
-message: String
-}
+// const apolloServer = new ApolloServer({typeDefs, resolvers});
 
-type Query {
-    events: [Event]!
-}
-`;
+// export const config = {
+//     api:{
+//         bodyParser: false,
+//     }
+// };
 
-const apolloServer = new ApolloServer({typeDefs, resolvers});
-
-export const config = {
-    api:{
-        bodyParser: false,
-    }
-};
-
-export default startServerAndCreateNextHandler(apolloServer);
+// export default startServerAndCreateNextHandler(apolloServer);
 
 
 //Might need later:
