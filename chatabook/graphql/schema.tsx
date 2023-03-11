@@ -2,13 +2,13 @@ import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type User {
-    id: Int
+    id: ID
     name: String
     surname: String
   }
 
   type Event {
-    id: Int
+    id: ID
     user: User
     userId: Int
     occassion: String

@@ -7,6 +7,7 @@ export const resolvers = {
         include: {
           user: {
             select: {
+                id:true,
               name: true,
               surname: true,
             },
