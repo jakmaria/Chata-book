@@ -22,5 +22,6 @@ export const typeDefs = gql`
 
   type Query {
     events: [Event]!
+    users: [User]!
   }
 `;

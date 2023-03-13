@@ -18,5 +18,8 @@ export const resolvers = {
         }
       });
     },
+    users: () => {
+      return prisma.user.findMany();
+    },
   },
 };

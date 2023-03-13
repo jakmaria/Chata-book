@@ -1,64 +1,70 @@
-import gql from "graphql-tag";
-import { useState } from "react";
-
+import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+import { useEffect, useState } from 'react';
+import type { Event, User } from '@prisma/client';
 
 const AllNamesQuery = gql`
   query {
-    events {
-      user {
-        name
-        surname
-      }
+    users {
+      name
+      surname
+      id
     }
   }
 `;
 
+export default function CreateEventForm() {
+  const { data, loading, error } = useQuery(AllNamesQuery);
+  const [formState, setFormState] = useState({
+    name: '',
+    occassion: '',
+    people: '',
+    whole: '',
+    start: '',
+    end: '',
+    appartments: '',
+    message: '',
+  });
 
+  useEffect(()=>{
+    console.log(formState)
+  },[formState])
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
 
-
-export default function CreateEventForm(){
-    const [formState, setFormState] = useState({
-        name: '',
-        url: '',
-
-      });
-    
-      return (
-        <div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
+  return (
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="flex flex-column mt3">
+          <select
+            value={formState.name}
+            onChange={(e) => {
+              setFormState({
+                ...formState,
+                name: e.target.value,
+              });
             }}
           >
-            <div className="flex flex-column mt3">
-              <input
-                className="mb2"
-                value={formState.name}
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    name: e.target.value
-                  })
-                }
-                type="text"
-                placeholder="A description for the link"
-              />
-              <input
-                className="mb2"
-                value={formState.url}
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    url: e.target.value
-                  })
-                }
-                type="text"
-                placeholder="The URL for the link"
-              />
-            </div>
-            <button type="submit">Submit</button>
-          </form>
+            {data.users.map((user: User) => (
+              <option key={user.id} value={user.name}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <input type="date" value={formState.start} onChange={(e) => {
+              setFormState({
+                ...formState,
+                start: e.target.value,
+              });
+            }}/>
         </div>
-      );
-    };
+        <button type="submit">Vytvorit udalost</button>
+      </form>
+    </div>
+  );
+}
