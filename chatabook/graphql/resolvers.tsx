@@ -13,6 +13,9 @@ export const resolvers = {
             },
           },
         },
+        orderBy:{
+          start: 'asc'
+        }
       });
     },
   },

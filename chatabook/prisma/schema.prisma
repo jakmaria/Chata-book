@@ -29,7 +29,7 @@ end         DateTime @db.Date
 people      Int
 whole       Boolean
 appartments Int?
-message     String?
+message     String? @db.LongText
 
 @@index([userId])
 }
