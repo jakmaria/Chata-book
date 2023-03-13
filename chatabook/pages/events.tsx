@@ -45,7 +45,7 @@ export default function Events() {
       </div>
       {data.events.map((event: Event) => (
         <>
-          <div>
+          <div key={event.id}>
             <h1>Kto objednal chatu? {event.user.name}</h1>
             <h1>Udalosť: {event.occassion}</h1>
             <p>Počet ľudí: {event.people}</p>

@@ -24,4 +24,6 @@ export const typeDefs = gql`
     events: [Event]!
     users: [User]!
   }
+
+  
 `;
