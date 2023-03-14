@@ -1,19 +1,16 @@
 import CreateEventForm from '@/components/CreateEventForm';
-import { yesOrNo } from '@/scripts/yesOrNo';
 import { gql, useQuery } from '@apollo/client';
 import type { Event } from '@prisma/client';
-import parseJSON from 'date-fns/esm/parseJSON';
 import { useState } from 'react';
-import { createDate } from '../scripts/createDate';
+import EventTile from '@/components/EventTile';
 
 const AllEventsQuery = gql`
   query {
     events {
       user {
-        id
         name
-        surname
       }
+      id
       occassion
       people
       whole
@@ -39,27 +36,24 @@ export default function Events() {
 
   return (
     <>
-      <div>
-        <button onClick={handleClick}>Vytvorit udalost</button>
+      <div className="flex flex-col ">
+        <button className="border-black rounded-md border-solid border-[3px]" onClick={handleClick}>
+          Vytvorit udalost
+        </button>
         {showForm && <CreateEventForm />}
       </div>
       {data.events.map((event: Event) => (
-        <>
-          <div key={event.id}>
-            <h1>Kto objednal chatu? {event.user.name}</h1>
-            <h1>Udalosť: {event.occassion}</h1>
-            <p>Počet ľudí: {event.people}</p>
-            <p>Chceme celú chatu: {yesOrNo(event.whole)}</p>
-            <p>Začíname</p>
-            <p>{createDate(event.start)}</p>
-            <p>Končíme</p>
-            <p>{createDate(event.end)}</p>
-            {event.appartments ? (
-              <p>Počet apartmánov, ktorý budeme potrebovať: {event.appartments}</p>
-            ) : null}
-            {event.message ? <p>{event.message}</p> : null}
-          </div>
-        </>
+        <EventTile
+          key={event.id}
+          name={event.user.name}
+          occassion={event.occassion}
+          start={event.start}
+          end={event.end}
+          message={event.message}
+          people={event.people}
+          appartments={event.appartments}
+          whole={event.whole}
+        />
       ))}
     </>
   );

@@ -22,19 +22,3 @@ export default createYoga<{
       bodyParser: false
     }
   }
-
-// const apolloServer = new ApolloServer({typeDefs, resolvers});
-
-// export const config = {
-//     api:{
-//         bodyParser: false,
-//     }
-// };
-
-// export default startServerAndCreateNextHandler(apolloServer);
-
-
-//Might need later:
-// export default startServerAndCreateNextHandler(server, {
-//     context: async (req, res) => ({ req, res, user: await getLoggedInUser(req) }),
-//   });

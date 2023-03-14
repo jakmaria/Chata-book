@@ -28,7 +28,7 @@ start       DateTime @db.Date
 end         DateTime @db.Date
 people      Int
 whole       Boolean
-appartments Int?
+appartments Int
 message     String? @db.LongText
 
 @@index([userId])
