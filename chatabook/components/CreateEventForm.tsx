@@ -14,16 +14,8 @@ const AllNamesQuery = gql`
   }
 `;
 
-const userIdQuery = gql`
-  query {
-    users {
-      userId
-    }
-  }
-`;
-
 const CREATE_EVENT_MUTATION = gql`
-  mutation CreateMutation(
+  mutation createMutation(
     $userId: Int!
     $occassion: String!
     $start: String!
@@ -31,26 +23,19 @@ const CREATE_EVENT_MUTATION = gql`
     $people: Int!
     $whole: Boolean!
     $appartments: Int!
-    $message: String!
+    $message: String
   ) {
-    create(
-      userId: userId
-      occassion: occassion
-      start: start
-      end: end
-      people: people
-      whole: whole
-      appartments: appartments
-      message: message
+    createEvent(
+      userId: $userId
+      occassion: $occassion
+      start: $start
+      end: $end
+      people: $people
+      whole: $whole
+      appartments: $appartments
+      message: $message
     ) {
-      userId
-      occassion
-      start
-      end
-      people
-      whole
-      appartments
-      message
+      id
     }
   }
 `;
@@ -63,9 +48,9 @@ export default function CreateEventForm() {
     occassion: '',
     start: '',
     end: '',
-    people: '',
+    people: 0,
     whole: true,
-    appartments: '',
+    appartments: 1,
     message: '',
   });
 
@@ -75,7 +60,7 @@ export default function CreateEventForm() {
       occassion: formState.occassion,
       start: formState.start,
       end: formState.end,
-      people: formState.people,
+      people: Number(formState.people),
       whole: formState.whole,
       appartments: formState.appartments,
       message: formState.message,
@@ -83,7 +68,7 @@ export default function CreateEventForm() {
   });
 
   useEffect(() => {
-    console.log(formState);
+    console.log(formState, typeof new Date(formState.start));
   }, [formState]);
 
   if (loading) return <p>Loading...</p>;
@@ -94,7 +79,7 @@ export default function CreateEventForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createEvent()
+          createEvent();
         }}
       >
         <div className="flex flex-col gap-3">
@@ -170,7 +155,7 @@ export default function CreateEventForm() {
               onChange={(e) => {
                 setFormState({
                   ...formState,
-                  people: e.target.value,
+                  people: Number(e.target.value),
                 });
               }}
             />
@@ -205,13 +190,13 @@ export default function CreateEventForm() {
               onChange={(e) => {
                 setFormState({
                   ...formState,
-                  appartments: e.target.value,
+                  appartments: Number(e.target.value),
                 });
               }}
             >
-              <option>{1}</option>
-              <option>{2}</option>
-              <option>{3}</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
             </select>
           </label>
           <label className="flex flex-col">
