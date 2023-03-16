@@ -4,7 +4,9 @@ import { createDate } from '../scripts/createDate';
 import EditEventForm from './EditEventForm';
 
 export type EventTileType = {
+  id:number;
   name: string;
+  userId:number;
   occassion: string;
   start: Date;
   end: Date;
@@ -15,7 +17,9 @@ export type EventTileType = {
 };
 
 export default function EventTile({
+  id,
   name,
+  userId,
   occassion,
   start,
   end,
@@ -26,7 +30,9 @@ export default function EventTile({
 }: EventTileType) {
   const [edit, setEdit] = useState<Boolean>(false);
   const [eventInfo, setEventInfo] = useState<EventTileType>({
+    id,
     name,
+    userId,
     occassion,
     start,
     end,

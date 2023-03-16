@@ -18,6 +18,7 @@ const AllNamesQuery = gql`
 
 const EDIT_EVENT_MUTATION = gql`
   mutation editMutation(
+    $id: ID!
     $userId: Int!
     $occassion: String!
     $start: String!
@@ -28,6 +29,7 @@ const EDIT_EVENT_MUTATION = gql`
     $message: String
   ) {
     editEvent(
+      id: $id
       userId: $userId
       occassion: $occassion
       start: $start
@@ -54,10 +56,10 @@ export default function EditEventForm({
   const { data, loading, error } = useQuery(AllNamesQuery);
 
   const [editFormState, setEditFormState] = useState({
-    //have to change this one because we cant get to userId now
-    userId: 1,
+    id: eventInfo.id,
+    userId: eventInfo.userId,
     occassion: eventInfo.occassion,
-    start: new Date(parseInt(eventInfo.start.toString())).toISOString().slice(0, 10), 
+    start: new Date(parseInt(eventInfo.start.toString())).toISOString().slice(0, 10),
     end: new Date(parseInt(eventInfo.end.toString())).toISOString().slice(0, 10),
     people: eventInfo.people,
     whole: eventInfo.whole,
@@ -69,6 +71,7 @@ export default function EditEventForm({
 
   const [editEvent] = useMutation(EDIT_EVENT_MUTATION, {
     variables: {
+      id: Number(editFormState.id),
       userId: editFormState.userId,
       occassion: editFormState.occassion,
       start: editFormState.start,
@@ -93,6 +96,8 @@ export default function EditEventForm({
         onSubmit={(e) => {
           e.preventDefault();
           editEvent();
+          setEventInfo((prev) => ({ ...prev, editFormState }));
+          setEdit(false);
         }}
       >
         <div className="flex flex-col gap-3">

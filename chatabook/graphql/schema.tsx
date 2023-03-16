@@ -40,6 +40,7 @@ export const typeDefs = gql`
 
   type Mutation {
     editEvent(
+      id: ID!
       userId: Int!
       occassion: String!
       start: String!

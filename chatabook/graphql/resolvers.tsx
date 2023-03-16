@@ -24,7 +24,7 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createEvent(args: Event) {
+    createEvent(_: any, args: Event) {
       return prisma.event.create({
         data: {
           userId: args.userId,
@@ -38,10 +38,10 @@ export const resolvers = {
         },
       });
     },
-    editEvent(args: Event) {
+    editEvent(_: any, args: Event) {
       return prisma.event.update({
         where: {
-          id: args.id,
+          id: Number(args.id),
         },
         data: {
           userId: args.userId,
