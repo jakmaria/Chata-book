@@ -1,12 +1,14 @@
 import { yesOrNo } from '@/scripts/yesOrNo';
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { createDate } from '../scripts/createDate';
 import EditEventForm from './EditEventForm';
+import gql from 'graphql-tag';
 
 export type EventTileType = {
-  id:number;
+  id: number;
   name: string;
-  userId:number;
+  userId: number;
   occassion: string;
   start: Date;
   end: Date;
@@ -15,6 +17,14 @@ export type EventTileType = {
   appartments?: number;
   whole: boolean;
 };
+
+const DELETE_EVENT_MUTATION = gql`
+  mutation deleteMutation($id: ID!) {
+    deleteEvent(id: $id) {
+      id
+    }
+  }
+`;
 
 export default function EventTile({
   id,
@@ -41,6 +51,12 @@ export default function EventTile({
     appartments,
     whole,
   });
+
+  const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
+    variables: {
+      id: eventInfo.id,
+    },
+  });
   return (
     <>
       {!edit ? (
@@ -59,7 +75,10 @@ export default function EventTile({
           >
             Upravit
           </button>
-          <button className="border-black rounded-md border-solid border-[3px] mb-1">
+          <button
+            onClick={() => deleteEvent()}
+            className="border-black rounded-md border-solid border-[3px] mb-1"
+          >
             Vymazat
           </button>
         </div>
