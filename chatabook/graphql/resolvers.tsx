@@ -24,8 +24,25 @@ export const resolvers = {
     },
   },
   Mutation: {
-    createEvent(args: Event) {
+    createEvent(_: any, args: Event) {
       return prisma.event.create({
+        data: {
+          userId: args.userId,
+          occassion: args.occassion,
+          start: new Date(args.start).toISOString(),
+          end: new Date(args.end).toISOString(),
+          people: args.people,
+          whole: args.whole,
+          appartments: args.appartments,
+          message: args.message,
+        },
+      });
+    },
+    editEvent(_: any, args: Event) {
+      return prisma.event.update({
+        where: {
+          id: Number(args.id),
+        },
         data: {
           userId: args.userId,
           occassion: args.occassion,
