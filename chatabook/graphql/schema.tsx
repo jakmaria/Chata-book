@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-import { LocalDateTypeDefinition} from 'graphql-scalars';
 
 export const typeDefs = gql`
   type User {
@@ -21,17 +20,6 @@ export const typeDefs = gql`
     message: String
   }
 
-  input EventInput {
-    userId: Int!
-    occassion: String!
-    start: String!
-    end: String!
-    people: Int!
-    whole: Boolean!
-    appartments: Int!
-    message: String
-  }
-
   type Query {
     events: [Event]!
     users: [User]!
@@ -39,6 +27,19 @@ export const typeDefs = gql`
 
   type Mutation {
     createEvent(
+      userId: Int!
+      occassion: String!
+      start: String!
+      end: String!
+      people: Int!
+      whole: Boolean!
+      appartments: Int!
+      message: String
+    ): Event!
+  }
+
+  type Mutation {
+    editEvent(
       userId: Int!
       occassion: String!
       start: String!

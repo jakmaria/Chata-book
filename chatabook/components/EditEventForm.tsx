@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import type { Event, User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
+import { EventTileType } from './EventTile';
+import { createDate } from '@/scripts/createDate';
 
 const AllNamesQuery = gql`
   query {
@@ -14,8 +16,8 @@ const AllNamesQuery = gql`
   }
 `;
 
-const CREATE_EVENT_MUTATION = gql`
-  mutation createMutation(
+const EDIT_EVENT_MUTATION = gql`
+  mutation editMutation(
     $userId: Int!
     $occassion: String!
     $start: String!
@@ -25,7 +27,7 @@ const CREATE_EVENT_MUTATION = gql`
     $appartments: Int!
     $message: String
   ) {
-    createEvent(
+    editEvent(
       userId: $userId
       occassion: $occassion
       start: $start
@@ -40,36 +42,47 @@ const CREATE_EVENT_MUTATION = gql`
   }
 `;
 
-export default function CreateEventForm() {
+export default function EditEventForm({
+  eventInfo,
+  setEventInfo,
+  setEdit,
+}: {
+  eventInfo: EventTileType;
+  setEventInfo: (value: EventTileType | ((prevVar: EventTileType) => EventTileType)) => void;
+  setEdit: (value: SetStateAction<Boolean>) => void;
+}) {
   const { data, loading, error } = useQuery(AllNamesQuery);
 
-  const [formState, setFormState] = useState({
+  const [editFormState, setEditFormState] = useState({
+    //have to change this one because we cant get to userId now
     userId: 1,
-    occassion: '',
-    start: '',
-    end: '',
-    people: '',
-    whole: true,
-    appartments: 1,
-    message: '',
+    occassion: eventInfo.occassion,
+    start: new Date(parseInt(eventInfo.start.toString())).toISOString().slice(0, 10), 
+    end: new Date(parseInt(eventInfo.end.toString())).toISOString().slice(0, 10),
+    people: eventInfo.people,
+    whole: eventInfo.whole,
+    appartments: eventInfo.appartments,
+    message: eventInfo.message || '',
   });
 
-  const [createEvent] = useMutation(CREATE_EVENT_MUTATION, {
+  console.log();
+
+  const [editEvent] = useMutation(EDIT_EVENT_MUTATION, {
     variables: {
-      userId: formState.userId,
-      occassion: formState.occassion,
-      start: formState.start,
-      end: formState.end,
-      people: Number(formState.people),
-      whole: formState.whole,
-      appartments: formState.appartments,
-      message: formState.message,
+      userId: editFormState.userId,
+      occassion: editFormState.occassion,
+      start: editFormState.start,
+      end: editFormState.end,
+      people: Number(editFormState.people),
+      whole: editFormState.whole,
+      appartments: editFormState.appartments,
+      message: editFormState.message,
     },
   });
 
   useEffect(() => {
-    console.log(formState, "user id is undefined", formState.userId == undefined);
-  }, [formState]);
+    console.log(editFormState, typeof new Date(editFormState.start));
+  }, [editFormState]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -79,7 +92,7 @@ export default function CreateEventForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createEvent();
+          editEvent();
         }}
       >
         <div className="flex flex-col gap-3">
@@ -87,10 +100,10 @@ export default function CreateEventForm() {
           <select
             className="font-bold"
             required
-            value={formState.userId}
+            value={editFormState.userId}
             onChange={(e) => {
-              setFormState({
-                ...formState,
+              setEditFormState({
+                ...editFormState,
                 userId: Number(e.target.value),
               });
             }}
@@ -106,10 +119,10 @@ export default function CreateEventForm() {
             <input
               required
               type="text"
-              value={formState.occassion}
+              value={editFormState.occassion}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
+                setEditFormState({
+                  ...editFormState,
                   occassion: e.target.value,
                 });
               }}
@@ -121,10 +134,10 @@ export default function CreateEventForm() {
               className="font-bold"
               required
               type="date"
-              value={formState.start}
+              value={editFormState.start}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
+                setEditFormState({
+                  ...editFormState,
                   start: e.target.value,
                 });
               }}
@@ -136,10 +149,10 @@ export default function CreateEventForm() {
               className="font-bold"
               required
               type="date"
-              value={formState.end}
+              value={editFormState.end}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
+                setEditFormState({
+                  ...editFormState,
                   end: e.target.value,
                 });
               }}
@@ -151,11 +164,11 @@ export default function CreateEventForm() {
               className="font-bold"
               required
               type="number"
-              value={formState.people}
+              value={editFormState.people}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
-                  people: e.target.value,
+                setEditFormState({
+                  ...editFormState,
+                  people: Number(e.target.value),
                 });
               }}
             />
@@ -167,12 +180,12 @@ export default function CreateEventForm() {
               required
               onChange={(e) => {
                 e.target.value == 'Áno'
-                  ? setFormState({
-                      ...formState,
+                  ? setEditFormState({
+                      ...editFormState,
                       whole: true,
                     })
-                  : setFormState({
-                      ...formState,
+                  : setEditFormState({
+                      ...editFormState,
                       whole: false,
                     });
               }}
@@ -186,10 +199,10 @@ export default function CreateEventForm() {
             <select
               className="font-bold"
               required
-              value={formState.appartments}
+              value={editFormState.appartments}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
+                setEditFormState({
+                  ...editFormState,
                   appartments: Number(e.target.value),
                 });
               }}
@@ -204,10 +217,10 @@ export default function CreateEventForm() {
             <textarea
               className="font-bold border-solid border-[2px] rounded-md border-black"
               placeholder="Ktoré apartmány využijete, čas odchodu, prípadne extra info k udalosti."
-              value={formState.message}
+              value={editFormState.message}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
+                setEditFormState({
+                  ...editFormState,
                   message: e.target.value,
                 });
               }}
@@ -215,7 +228,7 @@ export default function CreateEventForm() {
           </label>
         </div>
         <button className="border-solid border-[2px] rounded-md border-black mt-3" type="submit">
-          Vytvorit udalost
+          Upravit udalost
         </button>
       </form>
     </div>

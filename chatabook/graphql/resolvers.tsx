@@ -38,5 +38,22 @@ export const resolvers = {
         },
       });
     },
+    editEvent(args: Event) {
+      return prisma.event.update({
+        where: {
+          id: args.id,
+        },
+        data: {
+          userId: args.userId,
+          occassion: args.occassion,
+          start: new Date(args.start).toISOString(),
+          end: new Date(args.end).toISOString(),
+          people: args.people,
+          whole: args.whole,
+          appartments: args.appartments,
+          message: args.message,
+        },
+      });
+    },
   },
 };

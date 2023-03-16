@@ -1,8 +1,17 @@
 import CreateEventForm from '@/components/CreateEventForm';
 import { gql, useQuery } from '@apollo/client';
-import type { Event } from '@prisma/client';
+import type { Event, PrismaClient, Prisma } from '@prisma/client';
 import { useState } from 'react';
 import EventTile from '@/components/EventTile';
+
+
+type EventWithUser = Prisma.EventGetPayload<{
+  include: {
+    user: true;
+  }
+}>
+
+
 
 const AllEventsQuery = gql`
   query {
@@ -42,7 +51,7 @@ export default function Events() {
         </button>
         {showForm && <CreateEventForm />}
       </div>
-      {data.events.map((event: Event) => (
+      {data.events.map((event: EventWithUser) => (
         <EventTile
           key={event.id}
           name={event.user.name}

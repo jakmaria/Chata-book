@@ -1,5 +1,4 @@
-import { ApolloServer } from '@apollo/server';
-import { startServerAndCreateNextHandler } from '@as-integrations/next';
+
 import { createSchema, createYoga } from 'graphql-yoga'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { resolvers } from '@/graphql/resolvers';
