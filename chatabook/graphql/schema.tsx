@@ -51,4 +51,8 @@ export const typeDefs = gql`
       message: String
     ): Event!
   }
+
+  type Mutation {
+    deleteEvent(id: ID!): Event!
+  }
 `;

@@ -55,5 +55,12 @@ export const resolvers = {
         },
       });
     },
+    deleteEvent(_: any, args: Event) {
+      return prisma.event.delete({
+        where: {
+          id: Number(args.id),
+        },
+      });
+    },
   },
 };
