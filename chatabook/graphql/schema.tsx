@@ -24,6 +24,20 @@ export const typeDefs = gql`
     events: [Event]!
     users: [User]!
   }
+  interface MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
+
+  type EventChangeResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+    event: Event
+    query: Query
+  }
+
 
   type Mutation {
     createEvent(
@@ -35,7 +49,7 @@ export const typeDefs = gql`
       whole: Boolean!
       appartments: Int!
       message: String
-    ): Event!
+    ): EventChangeResponse!
   }
 
   type Mutation {
@@ -49,10 +63,21 @@ export const typeDefs = gql`
       whole: Boolean!
       appartments: Int!
       message: String
-    ): Event!
+    ): EventChangeResponse!
   }
 
   type Mutation {
     deleteEvent(id: ID!): Event!
   }
 `;
+
+// # interface ErrorResponse {
+// #   status: ResponseStatus!
+// #   message: String!
+// # }
+
+// # type EventError implements ErrorResponse {
+// #   status: ResponseStatus!
+// #   message: String!
+// # }
+// # union EventResponse = EventSuccess | EventError

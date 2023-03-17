@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { useEffect, useState } from 'react';
 import type { Event, User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
+import { EventWithUser } from '@/pages/events';
 
 const AllNamesQuery = gql`
   query {
@@ -35,12 +36,30 @@ const CREATE_EVENT_MUTATION = gql`
       appartments: $appartments
       message: $message
     ) {
-      id
+      event {
+        user {
+          name
+        }
+        id
+        userId
+        occassion
+        people
+        whole
+        start
+        end
+        appartments
+        message
+      }
     }
   }
 `;
 
-export default function CreateEventForm() {
+interface Fn {
+  getUpdatedData: Function;
+  showForm: Function;
+}
+
+export default function CreateEventForm(fn: Fn) {
   const { data, loading, error } = useQuery(AllNamesQuery);
 
   const [formState, setFormState] = useState({
@@ -67,9 +86,9 @@ export default function CreateEventForm() {
     },
   });
 
-  useEffect(() => {
-    console.log(formState, "user id is undefined", formState.userId == undefined);
-  }, [formState]);
+  // useEffect(() => {
+  //   console.log(formState, 'user id is undefined', formState.userId == undefined);
+  // }, [formState]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -77,9 +96,12 @@ export default function CreateEventForm() {
   return (
     <div>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          createEvent();
+          const data = await createEvent();
+          const d: EventWithUser = data.data.createEvent.event;
+          fn.getUpdatedData((prev: EventWithUser[]) => [...prev, d].sort((a, b) => b.id - a.id));
+          fn.showForm(false);
         }}
       >
         <div className="flex flex-col gap-3">
