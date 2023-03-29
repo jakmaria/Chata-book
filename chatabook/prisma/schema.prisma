@@ -15,6 +15,7 @@ id      Int   @default(autoincrement()) @id
 name    String
 surname String
 email   String
+telephone  String   
 events Event[]
 }
 
