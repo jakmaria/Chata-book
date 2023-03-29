@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/AuthContext';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type FormData = {
@@ -9,6 +10,8 @@ type FormData = {
 };
 
 export default function Register() {
+  const { user, signUp } = useAuth();
+  console.log('user is', user);
   const {
     register,
     handleSubmit,
