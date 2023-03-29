@@ -1,21 +1,43 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import Login from './Login';
+import Register from './Register';
 
 export default function Main() {
   const router = useRouter();
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
-  const handleClick = () => {
-    router.push('/events');
+  const showRegistrationForm = () => {
+    setShowRegister(!showRegister);
+    setShowLogin(false)
   };
+
+  const showLoginForm = () => {
+    setShowLogin(!showLogin);
+    setShowRegister(false)
+
+  };
+
   return (
     <>
-      <div className="flex justify-start flex-col gap-[10rem]">
+      <div className="flex justify-start flex-col gap-[3rem]">
         <h1 className="text-5xl mt-40 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
         <button
-          onClick={handleClick}
+          onClick={showRegistrationForm}
           className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
         >
-          Zobrazit udalosti
+          Zaregistruj sa
         </button>
+        {showRegister && <Register />}
+
+        <button
+          onClick={showLoginForm}
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+        >
+          Prihlás sa
+        </button>
+        {showLogin && <Login />}
       </div>
     </>
   );
