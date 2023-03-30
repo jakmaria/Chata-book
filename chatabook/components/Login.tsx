@@ -1,3 +1,6 @@
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type LoginData = {
@@ -6,26 +9,64 @@ type LoginData = {
 };
 
 export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<LoginData>();
+  const { user, login } = useAuth();
+  const router = useRouter();
 
-  const onLoginSubmit: SubmitHandler<LoginData> = (data) => console.log(data);
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   watch,
+  //   formState: { errors },
+  // } = useForm<LoginData>();
+
+  const [loginData, setLoginData] = useState<LoginData>({
+    email: '',
+    password: '',
+  });
+
+  // const onLoginSubmit: SubmitHandler<LoginData> = (data) => console.log(data);
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      await login(loginData.email, loginData.password);
+      router.push('/events');
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log(loginData);
+  };
 
   return (
     <>
-      <form className="flex flex-col gap-1" onSubmit={handleSubmit(onLoginSubmit)}>
+      <form className="flex flex-col gap-1" onSubmit={handleLogin}>
         <label>E-mail</label>
-        <input type="email" {...register('email', { required: true })} placeholder="email" />
-
+        <input
+          type="email"
+          required
+          value={loginData.email}
+          placeholder="E-mail"
+          onChange={(e) =>
+            setLoginData({
+              ...loginData,
+              email: e.target.value,
+            })
+          }
+        />
         <label>Heslo</label>
         <input
           type="password"
-          {...register('password', { required: true, minLength: 8 })}
+          required
+          value={loginData.password}
           placeholder="Heslo"
+          onChange={(e) =>
+            setLoginData({
+              ...loginData,
+              password: e.target.value,
+            })
+          }
         />
 
         <input className="bg-white" type="submit" />

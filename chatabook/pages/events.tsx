@@ -3,6 +3,7 @@ import { gql, NetworkStatus, useQuery } from '@apollo/client';
 import type { Event, PrismaClient, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import EventTile from '@/components/EventTile';
+import { useRouter } from 'next/router';
 
 export type EventWithUser = Prisma.EventGetPayload<{
   include: {
@@ -36,6 +37,7 @@ export default function Events() {
     notifyOnNetworkStatusChange: true,
   });
   const [showForm, setShowForm] = useState(false);
+  const router = useRouter();
 
   const handleClick = () => {
     setShowForm(!showForm);
@@ -70,6 +72,12 @@ export default function Events() {
             whole={event.whole}
           />
         ))}
+      <button
+        className="border-black rounded-md border-solid border-[3px]"
+        onClick={() => router.push('/')}
+      >
+        Spat na domovsku stranku
+      </button>
     </>
   );
 }
