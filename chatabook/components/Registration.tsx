@@ -1,31 +1,55 @@
 import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
-// import { useForm, SubmitHandler } from 'react-hook-form';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
 
 type FormData = {
   name: string;
   surname: string;
   password: string;
   email: string;
-  number: string;
+  telephone: string;
 };
+
+const CREATE_USER_MUTATION = gql`
+  mutation createUserMutation(
+    $name: String!
+    $surname: String!
+    $email: String!
+    $telephone: String!
+  ) {
+    createUser(name: $name, surname: $surname, email: $email, telephone: $telephone) {
+      user {
+        id
+        name
+        surname
+        email
+        telephone
+      }
+    }
+  }
+`;
 
 export default function Registration() {
   const { user, signUp } = useAuth();
   console.log('user is', user);
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm<FormData>();
 
   const [registrationData, setRegistrationData] = useState<FormData>({
     name: '',
     surname: '',
     password: '',
     email: '',
-    number: '',
+    telephone: '',
+  });
+
+  const [createUser] = useMutation(CREATE_USER_MUTATION, {
+    variables: {
+      name: registrationData.name,
+      surname: registrationData.surname,
+      password: registrationData.password,
+      email: registrationData.email,
+      telephone: registrationData.telephone,
+    },
   });
 
   // const handleRegistration: SubmitHandler<FormData> = (data) => console.log(data);
@@ -35,6 +59,7 @@ export default function Registration() {
 
     try {
       await signUp(registrationData.email, registrationData.password);
+      const newUser = await createUser();
     } catch (err) {
       console.log(err);
     }
@@ -102,11 +127,11 @@ export default function Registration() {
           type="text"
           required
           placeholder="Tel. číslo vo formáte +421"
-          value={registrationData.number}
+          value={registrationData.telephone}
           onChange={(e) =>
             setRegistrationData({
               ...registrationData,
-              number: e.target.value,
+              telephone: e.target.value,
             })
           }
         />

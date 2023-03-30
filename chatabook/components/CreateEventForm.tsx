@@ -99,8 +99,10 @@ export default function CreateEventForm(fn: Fn) {
         onSubmit={async (e) => {
           e.preventDefault();
           const data = await createEvent();
-          const d: EventWithUser = data.data.createEvent.event;
-          fn.getUpdatedData((prev: EventWithUser[]) => [...prev, d].sort((a, b) => b.id - a.id));
+          const newEventData: EventWithUser = data.data.createEvent.event;
+          fn.getUpdatedData((prev: EventWithUser[]) =>
+            [...prev, newEventData].sort((a, b) => b.id - a.id)
+          );
           fn.showForm(false);
         }}
       >

@@ -1,6 +1,6 @@
 import { EventWithUser } from '@/pages/events';
 import { createDate } from '@/scripts/createDate';
-import { Event } from '@prisma/client';
+import { Event, User } from '@prisma/client';
 import prisma from '../lib/prisma';
 
 export const resolvers = {
@@ -108,6 +108,30 @@ export const resolvers = {
           id: Number(args.id),
         },
       });
+    },
+    createUser: async (_: any, args: User) => {
+      try {
+        const createUser = await prisma.user.create({
+          data: {
+            name: args.name,
+            surname: args.surname,
+            email: args.email,
+            telephone: args.telephone,
+          },
+        });
+        return {
+          code: 200,
+          success: true,
+          message: `Užívatel ${args.name} ${args.surname} bol vytvoreny`,
+          user: createUser,
+        };
+      } catch (error) {
+        return {
+          code: 404,
+          success: false,
+          message: `Nebolo możné vytvorit uzivatela`,
+        };
+      }
     },
   },
 };
