@@ -31,7 +31,7 @@ const AllEventsQuery = gql`
 `;
 
 export default function Events() {
-  const [allEvents, setAllEvents] = useState<EventWithUser[] | null>(null);
+  const [allEvents, setAllEvents] = useState<EventWithUser[]>([]);
   const { data, loading, error, networkStatus } = useQuery(AllEventsQuery, {
     onCompleted: (data) => setAllEvents(data.events),
     notifyOnNetworkStatusChange: true,
@@ -58,19 +58,7 @@ export default function Events() {
       </div>
       {allEvents &&
         allEvents.map((event: EventWithUser) => (
-          <EventTile
-            id={event.id}
-            key={event.id}
-            userId={event.userId}
-            name={event.user.name}
-            occassion={event.occassion}
-            start={event.start}
-            end={event.end}
-            message={event.message}
-            people={event.people}
-            appartments={event.appartments}
-            whole={event.whole}
-          />
+          <EventTile key={event.id} event={event} setAllEvents={setAllEvents} />
         ))}
       <button
         className="border-black rounded-md border-solid border-[3px]"

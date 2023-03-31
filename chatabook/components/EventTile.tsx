@@ -1,9 +1,10 @@
 import { yesOrNo } from '@/scripts/yesOrNo';
 import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { createDate } from '../scripts/createDate';
 import EditEventForm from './EditEventForm';
 import gql from 'graphql-tag';
+import { EventWithUser } from '@/pages/events';
 
 export type EventTileType = {
   id: number;
@@ -27,29 +28,24 @@ const DELETE_EVENT_MUTATION = gql`
 `;
 
 export default function EventTile({
-  id,
-  name,
-  userId,
-  occassion,
-  start,
-  end,
-  message,
-  people,
-  appartments,
-  whole,
-}: EventTileType) {
+  event,
+  setAllEvents,
+}: {
+  event: EventWithUser;
+  setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
+}) {
   const [edit, setEdit] = useState<Boolean>(false);
   const [eventInfo, setEventInfo] = useState<EventTileType>({
-    id,
-    name,
-    userId,
-    occassion,
-    start,
-    end,
-    message,
-    people,
-    appartments,
-    whole,
+    id: event.id,
+    name: event.user.name,
+    userId: event.userId,
+    occassion: event.occassion,
+    start: event.start,
+    end: event.end,
+    message: event.message,
+    people: event.people,
+    appartments: event.appartments,
+    whole: event.whole,
   });
 
   const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
@@ -61,14 +57,14 @@ export default function EventTile({
     <>
       {!edit ? (
         <div className="border-black rounded-md border-solid border-[3px] mt-2 mb-2 flex flex-col">
-          <h1>Udalosť: {eventInfo.occassion}</h1>
-          <p>Od: {createDate(eventInfo.start)}</p>
-          <p>Do: {createDate(eventInfo.end)}</p>
-          <h1>Zodpovedná osoba: {eventInfo.name}</h1>
-          <p>Počet ľudí: {eventInfo.people}</p>
-          <p>Celá chata: {yesOrNo(eventInfo.whole)}</p>
-          <p>Počet apartmánov, ktorý budeme potrebovať: {eventInfo.appartments}</p>
-          {eventInfo.message ? <p>{eventInfo.message}</p> : null}
+          <h1>Udalosť: {event.occassion}</h1>
+          <p>Od: {createDate(event.start)}</p>
+          <p>Do: {createDate(event.end)}</p>
+          <h1>Zodpovedná osoba: {event.user.name}</h1>
+          <p>Počet ľudí: {event.people}</p>
+          <p>Celá chata: {yesOrNo(event.whole)}</p>
+          <p>Počet apartmánov, ktorý budeme potrebovať: {event.appartments}</p>
+          {event.message ? <p>{event.message}</p> : null}
           <button
             onClick={() => setEdit(true)}
             className="border-black rounded-md border-solid border-[3px] mb-1"
@@ -83,7 +79,12 @@ export default function EventTile({
           </button>
         </div>
       ) : (
-        <EditEventForm eventInfo={eventInfo} setEdit={setEdit} setEventInfo={setEventInfo} />
+        <EditEventForm
+          eventInfo={eventInfo}
+          setEdit={setEdit}
+          setEventInfo={setEventInfo}
+          setAllEvents={setAllEvents}
+        />
       )}
     </>
   );

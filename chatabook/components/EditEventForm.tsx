@@ -5,6 +5,7 @@ import type { Event, User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
 import { EventTileType } from './EventTile';
 import { createDate } from '@/scripts/createDate';
+import { EventWithUser } from '@/pages/events';
 
 const AllNamesQuery = gql`
   query {
@@ -51,10 +52,12 @@ export default function EditEventForm({
   eventInfo,
   setEventInfo,
   setEdit,
+  setAllEvents,
 }: {
   eventInfo: EventTileType;
   setEventInfo: (value: EventTileType | ((prevVar: EventTileType) => EventTileType)) => void;
   setEdit: (value: SetStateAction<Boolean>) => void;
+  setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
   const { data, loading, error } = useQuery(AllNamesQuery);
 
@@ -66,7 +69,7 @@ export default function EditEventForm({
     end: new Date(parseInt(eventInfo.end.toString())).toISOString().slice(0, 10),
     people: eventInfo.people,
     whole: eventInfo.whole,
-    appartments: eventInfo.appartments,
+    appartments: Number(eventInfo.appartments),
     message: eventInfo.message || '',
   });
 
@@ -85,7 +88,7 @@ export default function EditEventForm({
   });
 
   useEffect(() => {
-    console.log(editFormState, typeof new Date(editFormState.start));
+    console.log('magic', editFormState, typeof new Date(editFormState.start));
   }, [editFormState]);
 
   if (loading) return <p>Loading...</p>;
@@ -97,7 +100,24 @@ export default function EditEventForm({
         onSubmit={(e) => {
           e.preventDefault();
           editEvent();
-          setEventInfo((prev) => ({ ...prev, editFormState }));
+          setAllEvents((e) =>
+            e.map((event) => {
+              if (event.id == editFormState.id) {
+                return {
+                  ...event,
+                  appartments: editFormState.appartments,
+                  whole: editFormState.whole,
+                  start: new Date(editFormState.start),
+                  end: new Date(editFormState.end),
+                  message: editFormState.message,
+                  occassion: editFormState.occassion,
+                  people: editFormState.people,
+                  userId: editFormState.userId,
+                };
+              }
+              return event;
+            })
+          );
           setEdit(false);
         }}
       >
