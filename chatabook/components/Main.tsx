@@ -11,6 +11,8 @@ export default function Main() {
 
   const { user, logout } = useAuth();
 
+  user && console.log('Prihlaseny user je', user.email);
+
   const showRegistrationForm = () => {
     setShowRegister(!showRegister);
     setShowLogin(false);
@@ -25,12 +27,14 @@ export default function Main() {
     <>
       <div className="flex justify-start flex-col gap-[3rem]">
         <h1 className="text-5xl mt-40 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
-        <button
-          onClick={showRegistrationForm}
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
-        >
-          Zaregistruj sa
-        </button>
+        {!user && (
+          <button
+            onClick={showRegistrationForm}
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+          >
+            Zaregistruj sa
+          </button>
+        )}
         {showRegister && <Register />}
         {user ? (
           <button

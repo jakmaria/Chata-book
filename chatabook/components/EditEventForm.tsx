@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import { SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import type { Event, User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
 import { EventTileType } from './EventTile';
@@ -39,7 +39,10 @@ const EDIT_EVENT_MUTATION = gql`
       appartments: $appartments
       message: $message
     ) {
-      id
+      event {
+        id
+        people
+      }
     }
   }
 `;
@@ -66,8 +69,6 @@ export default function EditEventForm({
     appartments: eventInfo.appartments,
     message: eventInfo.message || '',
   });
-
-  console.log();
 
   const [editEvent] = useMutation(EDIT_EVENT_MUTATION, {
     variables: {

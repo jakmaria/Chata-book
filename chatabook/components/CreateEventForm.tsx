@@ -54,7 +54,7 @@ const CREATE_EVENT_MUTATION = gql`
   }
 `;
 
-interface Fn {
+export interface Fn {
   getUpdatedData: Function;
   showForm: Function;
 }
