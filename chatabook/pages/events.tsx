@@ -4,6 +4,8 @@ import type { Event, PrismaClient, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import EventTile from '@/components/EventTile';
 import { useRouter } from 'next/router';
+import Header from '@/components/Header';
+import { useAuth } from '@/context/AuthContext';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -38,6 +40,7 @@ const AllEventsQuery = gql`
 `;
 
 export default function Events() {
+  const { user, signUp } = useAuth();
   const [allEvents, setAllEvents] = useState<EventWithUser[]>([]);
   const { data, loading, error, networkStatus } = useQuery(AllEventsQuery, {
     onCompleted: (data) => setAllEvents(data.events),
@@ -58,6 +61,7 @@ export default function Events() {
 
   return (
     <>
+      {user && <Header />}
       <div className="flex flex-col ">
         <button className="border-black rounded-md border-solid border-[3px]" onClick={handleClick}>
           Vytvorit udalost

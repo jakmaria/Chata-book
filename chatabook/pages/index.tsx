@@ -1,8 +1,10 @@
 import Header from '@/components/Header';
 import Main from '@/components/Main';
+import { useAuth } from '@/context/AuthContext';
 import Head from 'next/head';
 
 export default function Home() {
+  const { user, signUp } = useAuth();
   return (
     <>
       <Head>
@@ -11,7 +13,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="bg-view bg-cover h-screen flex justify-center">
-        <Header />
+        {user&& <Header />}
         <Main />
       </div>
     </>

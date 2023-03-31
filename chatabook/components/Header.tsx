@@ -3,8 +3,8 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 
 const GET_USER_NAME = gql`
-  query {
-    user(email: String) {
+  query GetUser($email: String!) {
+    user(email: $email) {
       name
     }
   }
@@ -13,8 +13,11 @@ const GET_USER_NAME = gql`
 export default function Header() {
   const { user, signUp } = useAuth();
 
-  const { data, loading, error } = useQuery(GET_USER_NAME, user.email);
+  const { data, loading, error } = useQuery(GET_USER_NAME, {
+    variables: { email: user.email },
+  });
+  console.log(data);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-  return <>{user ? <p>Prihlaseny uzivatel je {data.name}</p> : null}</>;
+  return <>{user ? <p>Name of the user logged in is {data.user.name}</p> : null}</>;
 }

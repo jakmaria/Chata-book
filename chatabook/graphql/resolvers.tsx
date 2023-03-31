@@ -24,13 +24,12 @@ export const resolvers = {
     users: () => {
       return prisma.user.findMany();
     },
-    user: async (_: any, email: string) => {
+    user: async (_: any, { email }: any) => {
       const user = await prisma.user.findFirst({
-        where: {
-          email: email,
-        },
+        where: { email },
+        select: { name: true },
       });
-      console.log('user from prisma', user);
+      return user;
     },
   },
   Mutation: {
