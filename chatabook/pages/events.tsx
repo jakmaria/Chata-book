@@ -5,11 +5,18 @@ import { useEffect, useState } from 'react';
 import EventTile from '@/components/EventTile';
 import { useRouter } from 'next/router';
 
-export type EventWithUser = Prisma.EventGetPayload<{
-  include: {
-    user: true;
-  };
-}>;
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+export type EventWithUser = Modify<
+  Prisma.EventGetPayload<{
+    include: {
+      user: true;
+    };
+  }>,
+  { start: string; end: string }
+>;
+
+//  {start:string, end: string}
 
 const AllEventsQuery = gql`
   query {
@@ -46,6 +53,7 @@ export default function Events() {
   if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
+
   console.log(allEvents);
 
   return (

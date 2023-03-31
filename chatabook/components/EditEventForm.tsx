@@ -50,12 +50,12 @@ const EDIT_EVENT_MUTATION = gql`
 
 export default function EditEventForm({
   eventInfo,
-  setEventInfo,
+  // setEventInfo,
   setEdit,
   setAllEvents,
 }: {
-  eventInfo: EventTileType;
-  setEventInfo: (value: EventTileType | ((prevVar: EventTileType) => EventTileType)) => void;
+  eventInfo: EventWithUser;
+  // setEventInfo: (value: EventTileType | ((prevVar: EventTileType) => EventTileType)) => void;
   setEdit: (value: SetStateAction<Boolean>) => void;
   setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
@@ -103,12 +103,13 @@ export default function EditEventForm({
           setAllEvents((e) =>
             e.map((event) => {
               if (event.id == editFormState.id) {
+                console.log('predtym', new Date(editFormState.start), editFormState.start);
                 return {
                   ...event,
                   appartments: editFormState.appartments,
                   whole: editFormState.whole,
-                  start: new Date(editFormState.start),
-                  end: new Date(editFormState.end),
+                  start: new Date(editFormState.start).getTime().toString(),
+                  end: new Date(editFormState.end).getTime().toString(),
                   message: editFormState.message,
                   occassion: editFormState.occassion,
                   people: editFormState.people,

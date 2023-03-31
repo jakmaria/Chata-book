@@ -35,24 +35,26 @@ export default function EventTile({
   setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
   const [edit, setEdit] = useState<Boolean>(false);
-  const [eventInfo, setEventInfo] = useState<EventTileType>({
-    id: event.id,
-    name: event.user.name,
-    userId: event.userId,
-    occassion: event.occassion,
-    start: event.start,
-    end: event.end,
-    message: event.message,
-    people: event.people,
-    appartments: event.appartments,
-    whole: event.whole,
-  });
+  // const [eventInfo, setEventInfo] = useState<EventTileType>({
+  //   id: event.id,
+  //   name: event.user.name,
+  //   userId: event.userId,
+  //   occassion: event.occassion,
+  //   start: event.start,
+  //   end: event.end,
+  //   message: event.message,
+  //   people: event.people,
+  //   appartments: event.appartments,
+  //   whole: event.whole,
+  // });
 
   const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
     variables: {
-      id: eventInfo.id,
+      id: event.id,
     },
   });
+
+  console.log(createDate(event.start));
   return (
     <>
       {!edit ? (
@@ -80,9 +82,9 @@ export default function EventTile({
         </div>
       ) : (
         <EditEventForm
-          eventInfo={eventInfo}
+          eventInfo={event}
           setEdit={setEdit}
-          setEventInfo={setEventInfo}
+          // setEventInfo={setEventInfo}
           setAllEvents={setAllEvents}
         />
       )}
