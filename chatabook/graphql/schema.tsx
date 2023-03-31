@@ -25,7 +25,10 @@ export const typeDefs = gql`
   type Query {
     events: [Event]!
     users: [User]!
-    user: User!
+  }
+
+  type Query {
+    user(email: String!): User
   }
 
   interface MutationResponse {

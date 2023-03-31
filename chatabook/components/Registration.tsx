@@ -1,9 +1,10 @@
 import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
 import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { User } from '@prisma/client';
 import { Fn } from './CreateEventForm';
+import { getAuth, updateProfile } from 'firebase/auth';
 
 type FormData = {
   name: string;
@@ -32,10 +33,10 @@ const CREATE_USER_MUTATION = gql`
   }
 `;
 
-
 export default function Registration() {
   const { user, signUp } = useAuth();
   console.log('user is', user);
+
 
   const [newUserData, setNewUserData] = useState<User>();
 
@@ -57,7 +58,7 @@ export default function Registration() {
     },
   });
 
-
+  user && console.log(user.displayName);
   const handleRegistration = async (e: any) => {
     e.preventDefault();
 
@@ -69,6 +70,8 @@ export default function Registration() {
       console.log(err);
     }
   };
+
+
 
   return (
     <>
@@ -143,8 +146,9 @@ export default function Registration() {
           <input className="bg-white" type="submit" />
         </form>
       ) : (
-        <p className='bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base'>
-          Novy uzivatel {newUserData.name} {newUserData.surname} bol vytvoreny, prihlásenie prebehlo automaticky.
+        <p className="bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base">
+          Novy uzivatel {newUserData.name} {newUserData.surname} bol vytvoreny, prihlásenie prebehlo
+          automaticky.
         </p>
       )}
     </>
