@@ -14,8 +14,6 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  console.log('user is', user);
- 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -38,7 +36,14 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   const login = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   const logout = async () => {

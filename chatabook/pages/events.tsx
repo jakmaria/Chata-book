@@ -6,6 +6,7 @@ import EventTile from '@/components/EventTile';
 import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import { useAuth } from '@/context/AuthContext';
+import { getAuth } from 'firebase/auth';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -40,10 +41,20 @@ const AllEventsQuery = gql`
 `;
 
 export default function Events() {
-  const { user, signUp } = useAuth();
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [allEvents, setAllEvents] = useState<EventWithUser[]>([]);
   const { data, loading, error, networkStatus } = useQuery(AllEventsQuery, {
-    onCompleted: (data) => setAllEvents(data.events),
+    onCompleted: (data) => {
+      const events = data.events.map((event: EventWithUser) => {
+        return {
+          ...event,
+          start: event.start.toString(),
+          end: event.end.toString(),
+        };
+      });
+      setAllEvents(events);
+    },
     notifyOnNetworkStatusChange: true,
   });
   const [showForm, setShowForm] = useState(false);
@@ -56,8 +67,6 @@ export default function Events() {
   if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-
-  console.log(allEvents);
 
   return (
     <>

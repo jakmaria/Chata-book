@@ -2,7 +2,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Login from './Login';
-import Register from './Registration';
+import Register from './SignUp';
 
 export default function Main() {
   const router = useRouter();

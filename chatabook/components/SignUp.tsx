@@ -33,10 +33,10 @@ const CREATE_USER_MUTATION = gql`
   }
 `;
 
-export default function Registration() {
-  const { user, signUp } = useAuth();
-  console.log('user is', user);
-
+export default function SignUp() {
+  const { signUp } = useAuth();
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const [newUserData, setNewUserData] = useState<User>();
 
@@ -58,7 +58,6 @@ export default function Registration() {
     },
   });
 
-  user && console.log(user.displayName);
   const handleRegistration = async (e: any) => {
     e.preventDefault();
 
@@ -66,12 +65,19 @@ export default function Registration() {
       await signUp(registrationData.email, registrationData.password);
       const newUser = await createUser();
       setNewUserData(newUser.data.createUser.user);
+      if (user) {
+        updateProfile(user, {
+          displayName: registrationData.name,
+        });
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-
+  function validateForm(){
+    const formName = document.querySelector('name').value
+  }
 
   return (
     <>

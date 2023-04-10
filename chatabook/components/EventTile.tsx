@@ -54,7 +54,6 @@ export default function EventTile({
     },
   });
 
-  console.log(createDate(event.start));
   return (
     <>
       {!edit ? (

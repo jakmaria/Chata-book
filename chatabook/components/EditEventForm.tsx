@@ -103,7 +103,6 @@ export default function EditEventForm({
           setAllEvents((e) =>
             e.map((event) => {
               if (event.id == editFormState.id) {
-                console.log('predtym', new Date(editFormState.start), editFormState.start);
                 return {
                   ...event,
                   appartments: editFormState.appartments,

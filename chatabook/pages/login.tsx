@@ -1,4 +1,4 @@
-import Login from '@/components/Registration';
+import Login from '@/components/SignUp';
 
 export default function loginPage() {
   return <Login />;
