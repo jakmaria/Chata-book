@@ -3,7 +3,6 @@ import { useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
 import { User } from '@prisma/client';
-import { Fn } from './CreateEventForm';
 import { getAuth, updateProfile } from 'firebase/auth';
 
 type FormData = {
@@ -64,19 +63,18 @@ export default function SignUp() {
     try {
       await signUp(registrationData.email, registrationData.password);
       const newUser = await createUser();
-      setNewUserData(newUser.data.createUser.user);
-      if (user) {
-        updateProfile(user, {
-          displayName: registrationData.name,
-        });
-      }
+      await setNewUserData(newUser.data.createUser.user);
+      console.log('createuser opoved', newUser.data.createUser.user);
     } catch (err) {
       console.log(err);
     }
   };
 
-  function validateForm(){
-    const formName = document.querySelector('name').value
+  if (newUserData && user) {
+    updateProfile(user, {
+      displayName: newUserData.name,
+    });
+    console.log("user.displayName", user.displayName)
   }
 
   return (
@@ -152,10 +150,12 @@ export default function SignUp() {
           <input className="bg-white" type="submit" />
         </form>
       ) : (
-        <p className="bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base">
-          Novy uzivatel {newUserData.name} {newUserData.surname} bol vytvoreny, prihlásenie prebehlo
-          automaticky.
-        </p>
+        user && (
+          <p className="bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base">
+            Novy uzivatel {newUserData.name} {newUserData.surname} bol vytvoreny, prihlásenie
+            prebehlo automaticky.
+          </p>
+        )
       )}
     </>
   );
