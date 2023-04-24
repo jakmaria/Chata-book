@@ -1,9 +1,10 @@
 import { useAuth } from '@/context/AuthContext';
-import { useState } from 'react';
+import { StrictMode, useState } from 'react';
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/client';
 import { User } from '@prisma/client';
 import { getAuth, updateProfile } from 'firebase/auth';
+import validator from 'validator';
 
 type FormData = {
   name: string;
@@ -60,6 +61,26 @@ export default function SignUp() {
   const handleRegistration = async (e: any) => {
     e.preventDefault();
 
+    if (registrationData.name.length < 3) {
+      alert('Meno je príliš krátke');
+      return;
+    } else if (registrationData.surname.length < 3) {
+      alert('Priezvisko je príliš krátke');
+      return;
+    } else if (!validator.isStrongPassword(registrationData.password)) {
+      alert(
+        'Použite silné heslo! Musí byť dlhé minimálne 8 znakov a obsahovať: Veľké a malé písmená, aspoň 1 špeciálny znak a aspoň 1 číslo'
+      );
+    } else if (!validator.isEmail(registrationData.email)) {
+      alert('Vložte platný email!');
+      return;
+    } else if (
+      !validator.isMobilePhone(registrationData.telephone, ['sk-SK'], { strictMode: true })
+    ) {
+      alert('Vložte platné telefónne číslo');
+      return;
+    }
+
     try {
       await signUp(registrationData.email, registrationData.password);
       const newUser = await createUser();
@@ -74,13 +95,13 @@ export default function SignUp() {
     updateProfile(user, {
       displayName: newUserData.name,
     });
-    console.log("user.displayName", user.displayName)
+    console.log('user.displayName', user.displayName);
   }
 
   return (
     <>
       {!newUserData ? (
-        <form className="flex flex-col gap-1" onSubmit={handleRegistration}>
+        <form className="flex flex-col gap-1 w-50" onSubmit={handleRegistration}>
           <label>Meno</label>
           <input
             required
