@@ -29,6 +29,9 @@ const CREATE_USER_MUTATION = gql`
         email
         telephone
       }
+      success
+      code
+      message
     }
   }
 `;
@@ -69,8 +72,9 @@ export default function SignUp() {
       return;
     } else if (!validator.isStrongPassword(registrationData.password)) {
       alert(
-        'Použite silné heslo! Musí byť dlhé minimálne 8 znakov a obsahovať: Veľké a malé písmená, aspoň 1 špeciálny znak a aspoň 1 číslo'
+        'Použite silné heslo! \nMusí byť dlhé minimálne 8 znakov a obsahovať: \nVeľké a malé písmená \naspoň 1 špeciálny znak \naspoň 1 číslo'
       );
+      return;
     } else if (!validator.isEmail(registrationData.email)) {
       alert('Vložte platný email!');
       return;
@@ -82,8 +86,13 @@ export default function SignUp() {
     }
 
     try {
-      await signUp(registrationData.email, registrationData.password);
       const newUser = await createUser();
+      if (newUser.data.createUser.message === 'Daný email sa už používa.') {
+        alert(newUser.data.createUser.message);
+      }
+      if (newUser) {
+        await signUp(registrationData.email, registrationData.password);
+      }
       await setNewUserData(newUser.data.createUser.user);
       console.log('createuser opoved', newUser.data.createUser.user);
     } catch (err) {

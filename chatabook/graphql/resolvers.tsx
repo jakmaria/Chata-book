@@ -2,6 +2,7 @@ import { EventWithUser } from '@/pages/events';
 import { createDate } from '@/scripts/createDate';
 import { Event, User } from '@prisma/client';
 import prisma from '../lib/prisma';
+import validator from 'validator';
 
 export const resolvers = {
   Query: {
@@ -118,6 +119,27 @@ export const resolvers = {
     },
     createUser: async (_: any, args: User) => {
       try {
+        if (!validator.isEmail(args.email)) {
+          return {
+            code: 400,
+            success: false,
+            message: 'Email is not valid',
+          };
+        }
+        const existingUser = await prisma.user.findFirst({
+          where: {
+            email: args.email,
+          },
+        });
+
+        if (existingUser) {
+          return {
+            code: 400,
+            success: false,
+            message: 'Daný email sa už používa.',
+          };
+        }
+
         const createUser = await prisma.user.create({
           data: {
             name: args.name,
