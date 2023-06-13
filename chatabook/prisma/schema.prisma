@@ -33,7 +33,7 @@ users   User[]
 
 model Event {
 id          Int   @default(autoincrement()) @id
-user        User  @relation(fields: [userId], references: [id]) 
+user        User  @relation(fields: [userId], references: [id],onDelete: Cascade) 
 userId      Int   @unique
 occassion   String
 start       DateTime @db.Date
