@@ -1,6 +1,6 @@
 import { EventWithUser } from '@/pages/events';
 import { createDate } from '@/scripts/createDate';
-import { Event, User } from '@prisma/client';
+import { Event, User, User_role } from '@prisma/client';
 import prisma from '../lib/prisma';
 import validator from 'validator';
 
@@ -23,12 +23,21 @@ export const resolvers = {
       });
     },
     users: () => {
-      return prisma.user.findMany();
+      return prisma.user.findMany({
+        select: { role: true },
+      });
     },
     user: async (_: any, { email }: any) => {
       const user = await prisma.user.findFirst({
         where: { email },
-        select: { name: true },
+        select: {
+          name: true,
+          role: {
+            select: {
+              name: true,
+            },
+          },
+        },
       });
       return user;
     },
@@ -161,6 +170,16 @@ export const resolvers = {
           message: `Nebolo możné vytvorit uzivatela`,
         };
       }
+    },
+  },
+  User: {
+    role: async (parent: User) => {
+      return await prisma.user.findUnique({ where: { id: parent.id } }).role();
+    },
+  },
+  Role: {
+    users: async (parent: User_role) => {
+      return await prisma.user_role.findUnique({ where: { id: parent.id } }).users();
     },
   },
 };

@@ -28,6 +28,10 @@ const CREATE_USER_MUTATION = gql`
         surname
         email
         telephone
+        roleId
+        role {
+          name
+        }
       }
       success
       code
@@ -91,7 +95,11 @@ export default function SignUp() {
         alert(newUser.data.createUser.message);
       }
       if (newUser) {
-        await signUp(registrationData.email, registrationData.password);
+        await signUp(
+          registrationData.email,
+          registrationData.password,
+          newUser.data.createUser.user
+        );
       }
       await setNewUserData(newUser.data.createUser.user);
       console.log('createuser opoved', newUser.data.createUser.user);

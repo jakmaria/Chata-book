@@ -5,28 +5,38 @@ import { ApolloProvider } from '@apollo/client';
 import apolloClient from '../lib/apollo';
 import Layout from '../components/Layout';
 import { AuthContextProvider } from '@/context/AuthContext';
+import { UserContext, EventContext } from '../context/BookingContext';
 import { useRouter } from 'next/router';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { useState } from 'react';
+import { User } from '@prisma/client';
+import { EventTileType } from '@/components/EventTile';
 
 const noAuthRequired = ['/'];
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [users, setUsers] = useState<User[]>([]);
+  const [events, setEvents] = useState<EventTileType[]>([]);
 
   return (
     <AuthContextProvider>
       <ApolloProvider client={apolloClient}>
-        {noAuthRequired.includes(router.pathname) ? (
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        ) : (
-          <ProtectedRoute>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ProtectedRoute>
-        )}
+        <UserContext.Provider value={{ users, setUsers }}>
+          <EventContext.Provider value={{ events, setEvents }}>
+            {noAuthRequired.includes(router.pathname) ? (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            ) : (
+              <ProtectedRoute>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </ProtectedRoute>
+            )}
+          </EventContext.Provider>
+        </UserContext.Provider>
       </ApolloProvider>
     </AuthContextProvider>
   );
