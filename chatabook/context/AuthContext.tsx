@@ -8,6 +8,29 @@ import {
 import { auth } from '@/config/firebase';
 import { User } from '@prisma/client';
 
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3000/api/graphql',
+  cache: new InMemoryCache(),
+});
+
+const GET_USER_DATA = gql`
+  query getUserData($email: String!) {
+    user(email: $email) {
+      id
+      name
+      surname
+      email
+      telephone
+      roleId
+      role {
+        name
+      }
+    }
+  }
+`;
+
 const AuthContext = createContext<any>({});
 
 export const useAuth = () => useContext(AuthContext);
@@ -45,6 +68,19 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        // Fetch user data from GraphQL server after successful login
+        client
+          .query({
+            query: GET_USER_DATA,
+            variables: { email: user.email },
+          })
+          .then((result) => {
+            // Update userData state with the data fetched from the server
+            setUserData(result.data.user);
+          })
+          .catch((error) => {
+            console.error('Error fetching user data', error);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -58,7 +94,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signUp, logout, userData }}>
+    <AuthContext.Provider value={{ user, login, signUp, logout, userData, setUserData }}>
       {loading ? null : children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,6 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-
 type LoginData = {
   email: string;
   password: string;
@@ -12,31 +11,21 @@ export default function Login() {
   const { user, login } = useAuth();
   const router = useRouter();
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   watch,
-  //   formState: { errors },
-  // } = useForm<LoginData>();
-
   const [loginData, setLoginData] = useState<LoginData>({
     email: '',
     password: '',
   });
-
-  // const onLoginSubmit: SubmitHandler<LoginData> = (data) => console.log(data);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
 
     try {
       await login(loginData.email, loginData.password);
+
       router.push('/events');
     } catch (err) {
       console.log(err);
     }
-
-    console.log(loginData);
   };
 
   return (

@@ -31,7 +31,12 @@ export const resolvers = {
       const user = await prisma.user.findFirst({
         where: { email },
         select: {
+          id: true,
           name: true,
+          surname: true,
+          email: true,
+          telephone: true,
+          roleId: true,
           role: {
             select: {
               name: true,

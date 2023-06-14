@@ -33,9 +33,6 @@ export const typeDefs = gql`
   type Query {
     events: [Event]!
     users: [User]!
-  }
-
-  type Query {
     user(email: String!): User
   }
 
@@ -72,9 +69,7 @@ export const typeDefs = gql`
       appartments: Int!
       message: String
     ): EventChangeResponse!
-  }
 
-  type Mutation {
     editEvent(
       id: ID!
       userId: Int!
@@ -86,18 +81,14 @@ export const typeDefs = gql`
       appartments: Int!
       message: String
     ): EventChangeResponse!
-  }
 
-  type Mutation {
     createUser(
       name: String!
       surname: String!
       email: String!
       telephone: String!
     ): UserChangeResponse!
-  }
 
-  type Mutation {
     deleteEvent(id: ID!): Event!
   }
 `;
