@@ -8,7 +8,7 @@ type LoginData = {
 };
 
 export default function Login() {
-  const { user, login } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
   const [loginData, setLoginData] = useState<LoginData>({
@@ -21,7 +21,6 @@ export default function Login() {
 
     try {
       await login(loginData.email, loginData.password);
-
       router.push('/events');
     } catch (err) {
       console.log(err);

@@ -41,15 +41,25 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser({
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
         });
+
+        const { data } = await client.query({
+          query: GET_USER_DATA,
+          variables: { email: user.email },
+        });
+
+        if (data && data.user) {
+          setUserData(data.user);
+        }
       } else {
         setUser(null);
+        setUserData(null);
       }
       setLoading(false);
     });

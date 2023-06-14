@@ -5,6 +5,7 @@ export default function Header() {
   const auth = getAuth();
   const user = auth.currentUser;
   const userData = useAuth();
+
   return (
     <>
       <div className="">
