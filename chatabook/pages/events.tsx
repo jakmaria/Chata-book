@@ -70,23 +70,28 @@ export default function Events() {
 
   return (
     <>
-      {user && <Header />}
-      <div className="flex flex-col ">
-        <button className="border-black rounded-md border-solid border-[3px]" onClick={handleClick}>
-          Vytvorit udalost
+      <div className="bg-view bg-cover bg-scroll h-screen flex flex-col ">
+        <div className="ml-auto mr-auto"> {user && <Header />}</div>
+        <div className="flex flex-col ">
+          <button
+            className="border-black rounded-md border-solid border-[3px]  bg-white"
+            onClick={handleClick}
+          >
+            Vytvorit udalost
+          </button>
+          {showForm && <CreateEventForm getUpdatedData={setAllEvents} showForm={setShowForm} />}
+        </div>
+        {allEvents &&
+          allEvents.map((event: EventWithUser) => (
+            <EventTile key={event.id} event={event} setAllEvents={setAllEvents} />
+          ))}
+        <button
+          className="border-black rounded-md border-solid border-[3px] bg-white"
+          onClick={() => router.push('/')}
+        >
+          Spat na domovsku stranku
         </button>
-        {showForm && <CreateEventForm getUpdatedData={setAllEvents} showForm={setShowForm} />}
       </div>
-      {allEvents &&
-        allEvents.map((event: EventWithUser) => (
-          <EventTile key={event.id} event={event} setAllEvents={setAllEvents} />
-        ))}
-      <button
-        className="border-black rounded-md border-solid border-[3px]"
-        onClick={() => router.push('/')}
-      >
-        Spat na domovsku stranku
-      </button>
     </>
   );
 }
