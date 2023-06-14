@@ -35,18 +35,6 @@ export default function EventTile({
   setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
   const [edit, setEdit] = useState<Boolean>(false);
-  // const [eventInfo, setEventInfo] = useState<EventTileType>({
-  //   id: event.id,
-  //   name: event.user.name,
-  //   userId: event.userId,
-  //   occassion: event.occassion,
-  //   start: event.start,
-  //   end: event.end,
-  //   message: event.message,
-  //   people: event.people,
-  //   appartments: event.appartments,
-  //   whole: event.whole,
-  // });
 
   const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
     variables: {
@@ -57,7 +45,7 @@ export default function EventTile({
   return (
     <>
       {!edit ? (
-        <div className="border-black rounded-md border-solid border-[3px] mt-2 mb-2 flex flex-col">
+        <div className="border-black rounded-md border-solid border-[3px] mt-2 mb-2 flex flex-col bg-[#f0d07a]">
           <h1>Udalosť: {event.occassion}</h1>
           <p>Od: {createDate(event.start)}</p>
           <p>Do: {createDate(event.end)}</p>

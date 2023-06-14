@@ -253,7 +253,10 @@ export default function EditEventForm({
             />
           </label>
         </div>
-        <button className="border-solid border-[2px] rounded-md border-black mt-3" type="submit">
+        <button
+          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white"
+          type="submit"
+        >
           Upravit udalost
         </button>
       </form>

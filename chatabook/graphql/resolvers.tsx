@@ -24,7 +24,7 @@ export const resolvers = {
     },
     users: () => {
       return prisma.user.findMany({
-        select: { role: true },
+        select: { role: true, id: true, name: true, surname: true, email: true },
       });
     },
     user: async (_: any, { email }: any) => {

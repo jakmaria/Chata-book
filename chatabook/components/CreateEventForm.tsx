@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import { useEffect, useState } from 'react';
-import type { Event, User } from '@prisma/client';
+import { useState } from 'react';
+import type { User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
 import { EventWithUser } from '@/pages/events';
 
@@ -96,6 +96,7 @@ export default function CreateEventForm(fn: Fn) {
   return (
     <div>
       <form
+        className="bg-white"
         onSubmit={async (e) => {
           e.preventDefault();
           const data = await createEvent();
@@ -238,7 +239,10 @@ export default function CreateEventForm(fn: Fn) {
             />
           </label>
         </div>
-        <button className="border-solid border-[2px] rounded-md border-black mt-3" type="submit">
+        <button
+          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white"
+          type="submit"
+        >
           Vytvorit udalost
         </button>
       </form>
