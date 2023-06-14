@@ -6,6 +6,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import { auth } from '@/config/firebase';
+import { User } from '@prisma/client';
 
 const AuthContext = createContext<any>({});
 
@@ -13,6 +14,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
+  const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,8 +33,12 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
     return () => unsubscribe();
   }, []);
-  const signUp = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = (email: string, password: string, userData: User) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+      const user = userCredential.user;
+
+      setUserData(userData);
+    });
   };
 
   const login = (email: string, password: string) => {
@@ -52,7 +58,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signUp, logout }}>
+    <AuthContext.Provider value={{ user, login, signUp, logout, userData }}>
       {loading ? null : children}
     </AuthContext.Provider>
   );

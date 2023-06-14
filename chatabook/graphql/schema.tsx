@@ -7,6 +7,14 @@ export const typeDefs = gql`
     surname: String
     email: String
     telephone: String
+    roleId: Int
+    role: Role
+  }
+
+  type Role {
+    id: ID
+    name: String
+    users: [User]
   }
 
   type Event {
