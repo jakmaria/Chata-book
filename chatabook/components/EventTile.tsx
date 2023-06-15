@@ -5,6 +5,7 @@ import { createDate } from '../scripts/createDate';
 import EditEventForm from './EditEventForm';
 import gql from 'graphql-tag';
 import { EventWithUser } from '@/pages/events';
+import { useAuth } from '@/context/AuthContext';
 
 export type EventTileType = {
   id: number;
@@ -35,6 +36,7 @@ export default function EventTile({
   setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
   const [edit, setEdit] = useState<Boolean>(false);
+  const userData = useAuth();
 
   const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
     variables: {
@@ -54,18 +56,22 @@ export default function EventTile({
           <p>Celá chata: {yesOrNo(event.whole)}</p>
           <p>Počet apartmánov, ktorý budeme potrebovať: {event.appartments}</p>
           {event.message ? <p>{event.message}</p> : null}
-          <button
-            onClick={() => setEdit(true)}
-            className="border-black rounded-md border-solid border-[3px] mb-1"
-          >
-            Upravit
-          </button>
-          <button
-            onClick={() => deleteEvent()}
-            className="border-black rounded-md border-solid border-[3px] mb-1"
-          >
-            Vymazat
-          </button>
+          {event.userId === Number(userData?.userData?.id) && (
+            <>
+              <button
+                onClick={() => setEdit(true)}
+                className="border-black rounded-md border-solid border-[3px] mb-1"
+              >
+                Upravit
+              </button>
+              <button
+                onClick={() => deleteEvent()}
+                className="border-black rounded-md border-solid border-[3px] mb-1"
+              >
+                Vymazat
+              </button>
+            </>
+          )}
         </div>
       ) : (
         <EditEventForm
