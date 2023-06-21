@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { User } from '@prisma/client';
 import { useMutation } from '@apollo/client';
 import { EventWithUser } from '@/pages/events';
+import { useAuth } from '@/context/AuthContext';
 
 const AllNamesQuery = gql`
   query {
@@ -61,9 +62,10 @@ export interface Fn {
 
 export default function CreateEventForm(fn: Fn) {
   const { data, loading, error } = useQuery(AllNamesQuery);
+  const userData = useAuth();
 
   const [formState, setFormState] = useState({
-    userId: 1,
+    userId: userData.userData.id,
     occassion: '',
     start: '',
     end: '',
@@ -75,7 +77,7 @@ export default function CreateEventForm(fn: Fn) {
 
   const [createEvent] = useMutation(CREATE_EVENT_MUTATION, {
     variables: {
-      userId: formState.userId,
+      userId: Number(formState.userId),
       occassion: formState.occassion,
       start: formState.start,
       end: formState.end,
@@ -99,6 +101,29 @@ export default function CreateEventForm(fn: Fn) {
         className="bg-white"
         onSubmit={async (e) => {
           e.preventDefault();
+
+          // Parse dates
+          const startDate = new Date(formState.start);
+          const endDate = new Date(formState.end);
+          const now = new Date();
+
+          // Remove time part of the dates
+          startDate.setHours(0, 0, 0, 0);
+          endDate.setHours(0, 0, 0, 0);
+          now.setHours(0, 0, 0, 0);
+
+          // Check if the start date is in the past
+          if (startDate < now) {
+            alert('Start date cannot be in the past.');
+            return;
+          }
+
+          // Check if the end date is before the start date
+          if (endDate < startDate) {
+            alert('End date cannot be before the start date.');
+            return;
+          }
+
           const data = await createEvent();
           const newEventData: EventWithUser = data.data.createEvent.event;
           fn.getUpdatedData((prev: EventWithUser[]) =>
@@ -109,7 +134,7 @@ export default function CreateEventForm(fn: Fn) {
       >
         <div className="flex flex-col gap-3">
           <h3>Kto objednáva?</h3>
-          <select
+          {/* <select
             className="font-bold"
             required
             value={formState.userId}
@@ -125,6 +150,21 @@ export default function CreateEventForm(fn: Fn) {
                 {user.name}
               </option>
             ))}
+          </select> */}
+          <select
+            className="font-bold"
+            required
+            value={formState.userId}
+            onChange={(e) => {
+              setFormState({
+                ...formState,
+                userId: Number(e.target.value),
+              });
+            }}
+          >
+            <option key={userData.userData.id} value={userData.userData.id}>
+              {userData.userData.name}
+            </option>
           </select>
           <label>
             Príležitost:
