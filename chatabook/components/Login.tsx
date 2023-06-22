@@ -21,7 +21,6 @@ export default function Login() {
 
     try {
       await login(loginData.email, loginData.password);
-      router.push('/events');
     } catch (err) {
       console.log(err);
     }

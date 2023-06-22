@@ -11,6 +11,9 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import { useState } from 'react';
 import { User } from '@prisma/client';
 import { EventTileType } from '@/components/EventTile';
+import '../styles/main.scss';
+import '/styles/calendar.scss';
+import '../styles/big-calendar.css';
 
 const noAuthRequired = ['/'];
 

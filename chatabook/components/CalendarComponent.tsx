@@ -10,8 +10,6 @@ type CalendarProps = {
 const localizer = momentLocalizer(moment);
 
 export default function CalendarComponent({ eventsdata }: CalendarProps) {
-  console.log(eventsdata);
-
   return (
     <div>
       <Calendar
@@ -19,7 +17,7 @@ export default function CalendarComponent({ eventsdata }: CalendarProps) {
         events={eventsdata}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ height: 340, width: 600, backgroundColor: 'lightblue' }}
         onSelectEvent={(event) =>
           alert(`There is a ${event.occassion} by ${event.user.name}. ${event.message}`)
         }

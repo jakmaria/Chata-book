@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import { getAuth } from 'firebase/auth';
 import CalendarComponent from '@/components/CalendarComponent';
+import { useAuth } from '@/context/AuthContext';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -49,8 +50,8 @@ export default function Events() {
   const { data, loading, error, networkStatus } = useQuery(AllEventsQuery, {
     notifyOnNetworkStatusChange: true,
   });
+  const userData = useAuth();
 
-  data && console.log(data);
   useEffect(() => {
     if (data) {
       const events = data.events.map((event: EventWithUser) => {
@@ -87,36 +88,40 @@ export default function Events() {
 
   return (
     <>
-      <div className="bg-view bg-cover bg-scroll h-screen flex flex-col ">
-        <div className="ml-auto mr-auto"> {user && <Header />}</div>
-        <CalendarComponent eventsdata={calendarEvents} />
-        <div className="flex flex-col justify-content-center">
+      {userData.userData.roleId !== 1 ? (
+        <div className="bg-view bg-cover bg-scroll min-h-[100vh]  h-[100%] flex flex-col gap-6">
+          <div className="ml-auto mr-auto"> {user && <Header />}</div>
+          <CalendarComponent eventsdata={calendarEvents} />
+          <div className="flex flex-col gap-2 justify-content-center ml-auto mr-auto">
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base max-w-md"
+              onClick={handleClick}
+            >
+              Vytvorit udalost
+            </button>
+            {showForm && <CreateEventForm getUpdatedData={setAllEvents} showForm={setShowForm} />}
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base max-w-md"
+              onClick={() => setShowEvents(!showEvents)}
+            >
+              {showEvents ? 'Skryť' : 'Zobraziť'} udalosti
+            </button>
+          </div>
+          {showEvents &&
+            allEvents &&
+            allEvents.map((event: EventWithUser) => (
+              <EventTile key={event.id} event={event} setAllEvents={setAllEvents} />
+            ))}
           <button
-            className="border-black rounded-md border-solid border-[3px]  bg-white max-w-md"
-            onClick={handleClick}
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base max-w-md ml-auto mr-auto mb-4"
+            onClick={() => router.push('/')}
           >
-            Vytvorit udalost
-          </button>
-          {showForm && <CreateEventForm getUpdatedData={setAllEvents} showForm={setShowForm} />}
-          <button
-            className="border-black rounded-md border-solid border-[3px] bg-white max-w-md"
-            onClick={() => setShowEvents(!showEvents)}
-          >
-            {showEvents ? 'Hide' : 'Show'} Events
+            Späť na domovskú stránku
           </button>
         </div>
-        {showEvents &&
-          allEvents &&
-          allEvents.map((event: EventWithUser) => (
-            <EventTile key={event.id} event={event} setAllEvents={setAllEvents} />
-          ))}
-        <button
-          className="border-black rounded-md border-solid border-[3px] bg-white max-w-md"
-          onClick={() => router.push('/')}
-        >
-          Spat na domovsku stranku
-        </button>
-      </div>
+      ) : (
+        <h2>You are not allowed here!</h2>
+      )}
     </>
   );
 }

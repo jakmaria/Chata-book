@@ -9,7 +9,7 @@ export default function Main() {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
-  const { user, logout } = useAuth();
+  const { user, logout, userData } = useAuth();
 
   const showRegistrationForm = () => {
     setShowRegister(!showRegister);
@@ -23,8 +23,8 @@ export default function Main() {
 
   return (
     <>
-      <div className="flex justify-start flex-col gap-[3rem]">
-        <h1 className="text-5xl mt-40 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
+      <div className="ml-[35%] mr-[35%] mt-30 flex flex-col gap-[3rem]">
+        <h1 className="text-5xl mt-10 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
         {!user && (
           <button
             onClick={showRegistrationForm}
@@ -53,7 +53,7 @@ export default function Main() {
           </button>
         )}
         {showLogin && <Login />}
-        {user && (
+        {user && userData.roleId !== 1 && (
           <button
             onClick={() => {
               router.push('/events');

@@ -12,6 +12,7 @@ type FormData = {
   password: string;
   email: string;
   telephone: string;
+  roleId: number;
 };
 
 const CREATE_USER_MUTATION = gql`
@@ -20,8 +21,15 @@ const CREATE_USER_MUTATION = gql`
     $surname: String!
     $email: String!
     $telephone: String!
+    $roleId: Int!
   ) {
-    createUser(name: $name, surname: $surname, email: $email, telephone: $telephone) {
+    createUser(
+      name: $name
+      surname: $surname
+      email: $email
+      telephone: $telephone
+      roleId: $roleId
+    ) {
       user {
         id
         name
@@ -53,6 +61,7 @@ export default function SignUp() {
     password: '',
     email: '',
     telephone: '',
+    roleId: 1,
   });
 
   const [createUser] = useMutation(CREATE_USER_MUTATION, {
@@ -62,6 +71,7 @@ export default function SignUp() {
       password: registrationData.password,
       email: registrationData.email,
       telephone: registrationData.telephone,
+      roleId: registrationData.roleId,
     },
   });
 
