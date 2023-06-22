@@ -10,6 +10,12 @@ module.exports = {
       backgroundImage: {
         view: "url('../public/main-bg.jpeg')",
       },
+      backgroundSize: {
+        cover: 'cover',
+      },
+      backgroundAttachment: {
+        fixed: 'fixed',
+      },
     },
     fontFamily: {
       gloock: ['Gloock'],

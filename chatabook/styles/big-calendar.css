@@ -1,0 +1,26 @@
+.rbc-calendar {
+  border: 2px solid;
+  border-radius: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: medium;
+}
+
+.rbc-today {
+  border: 3px dotted green;
+}
+
+.rbc-day-slot {
+  border: 1px solid blue;
+  border-radius: 12px;
+}
+
+.rbc-toolbar {
+  background-color: rgb(144, 164, 164);
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.rbc-header {
+  background-color: lightskyblue;
+}

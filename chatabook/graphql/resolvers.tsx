@@ -18,7 +18,7 @@ export const resolvers = {
           },
         },
         orderBy: {
-          id: 'desc',
+          start: 'asc',
         },
       });
     },
@@ -160,6 +160,7 @@ export const resolvers = {
             surname: args.surname,
             email: args.email,
             telephone: args.telephone,
+            roleId: args.roleId,
           },
         });
         return {

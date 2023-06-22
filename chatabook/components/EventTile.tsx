@@ -47,14 +47,29 @@ export default function EventTile({
   return (
     <>
       {!edit ? (
-        <div className="border-black rounded-md border-solid border-[3px] mt-2 mb-2 flex flex-col bg-[#f0d07a]">
-          <h1>Udalosť: {event.occassion}</h1>
-          <p>Od: {createDate(event.start)}</p>
-          <p>Do: {createDate(event.end)}</p>
-          <h1>Zodpovedná osoba: {event.user.name}</h1>
-          <p>Počet ľudí: {event.people}</p>
-          <p>Celá chata: {yesOrNo(event.whole)}</p>
-          <p>Počet apartmánov, ktorý budeme potrebovať: {event.appartments}</p>
+        <div className="text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-[18px] mt-2 mb-2 mr-auto ml-auto flex flex-col bg-[#ACD7E5] min-w-[45vw] max-w-[60vw] opacity-80">
+          <h1>
+            Udalosť: <span className="text-red-600">{event.occassion}</span>
+          </h1>
+          <p>
+            Od: <span className="text-red-600">{createDate(event.start)}</span>
+          </p>
+          <p>
+            Do: <span className="text-red-600">{createDate(event.end)}</span>
+          </p>
+          <h1>
+            Zodpovedná osoba: <span className="text-red-600">{event.user.name}</span>
+          </h1>
+          <p>
+            Počet ľudí: <span className="text-red-600">{event.people}</span>
+          </p>
+          <p>
+            Celá chata: <span className="text-red-600">{yesOrNo(event.whole)}</span>
+          </p>
+          <p>
+            Počet apartmánov, ktorý budeme potrebovať:{' '}
+            <span className="text-red-600">{event.appartments}</span>
+          </p>
           {event.message ? <p>{event.message}</p> : null}
           {event.userId === Number(userData?.userData?.id) && (
             <>

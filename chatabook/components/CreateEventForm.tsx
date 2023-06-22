@@ -98,7 +98,7 @@ export default function CreateEventForm(fn: Fn) {
   return (
     <div>
       <form
-        className="bg-white"
+        className="bg-white min-w-[45vw] max-w-[60vw] text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock opacity-80"
         onSubmit={async (e) => {
           e.preventDefault();
 
@@ -134,25 +134,9 @@ export default function CreateEventForm(fn: Fn) {
       >
         <div className="flex flex-col gap-3">
           <h3>Kto objednáva?</h3>
-          {/* <select
-            className="font-bold"
-            required
-            value={formState.userId}
-            onChange={(e) => {
-              setFormState({
-                ...formState,
-                userId: Number(e.target.value),
-              });
-            }}
-          >
-            {data.users.map((user: User) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select> */}
+
           <select
-            className="font-bold"
+            className="font-bold text-red-600 border border-solid rounded-xl"
             required
             value={formState.userId}
             onChange={(e) => {
@@ -169,6 +153,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Príležitost:
             <input
+              className="text-red-600 border border-solid rounded-xl"
               required
               type="text"
               value={formState.occassion}
@@ -183,7 +168,7 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Od:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="date"
               value={formState.start}
@@ -198,7 +183,7 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Do:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="date"
               value={formState.end}
@@ -213,7 +198,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Počet ludí:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="number"
               value={formState.people}
@@ -228,7 +213,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Chceme mat celú chatu pre seba:
             <select
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               onChange={(e) => {
                 e.target.value == 'Áno'
@@ -249,7 +234,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Počet využitych apartmánov:
             <select
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               value={formState.appartments}
               onChange={(e) => {
@@ -267,7 +252,7 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Extra info
             <textarea
-              className="font-bold border-solid border-[2px] rounded-md border-black"
+              className="font-bold border-solid border-[2px] rounded-md border-black text-red-600"
               placeholder="Ktoré apartmány využijete, čas odchodu, prípadne extra info k udalosti."
               value={formState.message}
               onChange={(e) => {
@@ -280,7 +265,7 @@ export default function CreateEventForm(fn: Fn) {
           </label>
         </div>
         <button
-          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white"
+          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white py-1 px-2"
           type="submit"
         >
           Vytvorit udalost

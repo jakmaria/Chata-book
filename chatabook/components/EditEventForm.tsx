@@ -97,6 +97,7 @@ export default function EditEventForm({
   return (
     <div>
       <form
+        className="bg-white mr-auto ml-auto min-w-[45vw] max-w-[60vw] text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock opacity-80"
         onSubmit={(e) => {
           e.preventDefault();
           editEvent();
@@ -124,7 +125,7 @@ export default function EditEventForm({
         <div className="flex flex-col gap-3">
           <h3>Kto objednáva?</h3>
           <select
-            className="font-bold"
+            className="font-bold text-red-600 border border-solid rounded-xl"
             required
             value={editFormState.userId}
             onChange={(e) => {
@@ -143,6 +144,7 @@ export default function EditEventForm({
           <label>
             Príležitost:
             <input
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="text"
               value={editFormState.occassion}
@@ -157,7 +159,7 @@ export default function EditEventForm({
           <label className="flex flex-col">
             Od:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="date"
               value={editFormState.start}
@@ -172,7 +174,7 @@ export default function EditEventForm({
           <label className="flex flex-col">
             Do:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="date"
               value={editFormState.end}
@@ -187,7 +189,7 @@ export default function EditEventForm({
           <label>
             Počet ludí:
             <input
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="number"
               value={editFormState.people}
@@ -202,7 +204,7 @@ export default function EditEventForm({
           <label>
             Chceme mat celú chatu pre seba:
             <select
-              className="font-bold"
+              className="font-bold text-red-600 border border-solid rounded-xl"
               required
               onChange={(e) => {
                 e.target.value == 'Áno'
@@ -223,7 +225,7 @@ export default function EditEventForm({
           <label>
             Počet využitych apartmánov:
             <select
-              className="font-bold"
+              className="font-bold  text-red-600 border border-solid rounded-xl"
               required
               value={editFormState.appartments}
               onChange={(e) => {

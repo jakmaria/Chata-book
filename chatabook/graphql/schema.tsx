@@ -87,6 +87,7 @@ export const typeDefs = gql`
       surname: String!
       email: String!
       telephone: String!
+      roleId: Int!
     ): UserChangeResponse!
 
     deleteEvent(id: ID!): Event!
