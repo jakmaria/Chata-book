@@ -103,10 +103,14 @@ export default function SignUp() {
 
     try {
       const newUser = await createUser();
-      setShowForm(false);
       if (newUser.data.createUser.message === 'Daný email sa už používa.') {
         alert(newUser.data.createUser.message);
+        return;
+      } else if (newUser.data.createUser.message === 'Telefónne číslo sa už používa.') {
+        alert(newUser.data.createUser.message);
+        return;
       }
+
       if (newUser) {
         await signUp(
           registrationData.email,
@@ -115,6 +119,7 @@ export default function SignUp() {
         );
       }
       await setNewUserData(newUser.data.createUser.user);
+      setShowForm(false);
       console.log('createuser opoved', newUser.data.createUser.user);
     } catch (err) {
       console.log(err);

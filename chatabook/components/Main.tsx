@@ -53,7 +53,7 @@ export default function Main() {
           </button>
         )}
         {showLogin && <Login />}
-        {user && userData.roleId && userData.roleId > 1 && (
+        {user && userData && userData.roleId && userData.roleId > 1 && (
           <button
             onClick={() => {
               router.push('/events');
