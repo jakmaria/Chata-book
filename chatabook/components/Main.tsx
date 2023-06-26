@@ -23,7 +23,7 @@ export default function Main() {
 
   return (
     <>
-      <div className="ml-[35%] mr-[35%] mt-30 flex flex-col gap-[3rem]">
+      <div className="ml-[35%] mr-[35%] mt-20 flex flex-col gap-[3rem]">
         <h1 className="text-5xl mt-10 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
         {!user && (
           <button
@@ -53,7 +53,7 @@ export default function Main() {
           </button>
         )}
         {showLogin && <Login />}
-        {user && userData.roleId !== 1 && (
+        {user && userData.roleId && userData.roleId > 1 && (
           <button
             onClick={() => {
               router.push('/events');

@@ -88,7 +88,7 @@ export default function Events() {
 
   return (
     <>
-      {userData.userData.roleId !== 1 ? (
+      {userData.userData.roleId > 1 ? (
         <div className="bg-view bg-cover bg-scroll min-h-[100vh]  h-[100%] flex flex-col gap-6">
           <div className="ml-auto mr-auto"> {user && <Header />}</div>
           <CalendarComponent eventsdata={calendarEvents} />
@@ -120,7 +120,18 @@ export default function Events() {
           </button>
         </div>
       ) : (
-        <h2>You are not allowed here!</h2>
+        <div className="bg-view bg-cover bg-scroll flex flex-col justify-start items-center h-screen w-screen">
+          <h2 className="mt-10 p-4 bg-white opacity-80 border border-gray-400 rounded-xl  text-gray-800 font-gloock text-lg mb-5">
+            K udalostiam nemáš prístup, skús požiadať admina, aby ti ho udelil.
+          </h2>
+
+          <button
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base max-w-md"
+            onClick={() => router.push('/')}
+          >
+            Späť na domovskú stránku
+          </button>
+        </div>
       )}
     </>
   );
