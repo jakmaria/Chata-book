@@ -1,11 +1,8 @@
 import { EventWithUser } from '@/pages/events';
 import { createDate } from '@/scripts/createDate';
 import { Event, User, User_role } from '@prisma/client';
-// import prisma from '../lib/prisma';
 import validator from 'validator';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '@/lib/prisma';
 
 export const resolvers = {
   Query: {
@@ -143,17 +140,30 @@ export const resolvers = {
             message: 'Email is not valid',
           };
         }
-        const existingUser = await prisma.user.findFirst({
-          where: {
-            email: args.email,
-          },
-        });
+        const [existingUser, phoneNumberInUse] = await Promise.all([
+          prisma.user.findFirst({
+            where: {
+              email: args.email,
+            },
+          }),
+          prisma.user.findFirst({
+            where: {
+              telephone: args.telephone,
+            },
+          }),
+        ]);
 
         if (existingUser) {
           return {
             code: 400,
             success: false,
             message: 'Daný email sa už používa.',
+          };
+        } else if (phoneNumberInUse) {
+          return {
+            code: 400,
+            success: false,
+            message: 'Telefónne číslo sa už používa.',
           };
         }
 

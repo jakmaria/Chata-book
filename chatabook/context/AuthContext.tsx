@@ -93,8 +93,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
           });
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        if (error.code === 'auth/wrong-password') {
+          return 'The password you entered is not correct.';
+        } else if (error.code === 'auth/user-not-found') {
+          return 'No user found with this email.';
+        } else {
+          return 'An unknown error occurred.';
+        }
       });
   };
 

@@ -13,15 +13,20 @@ export default function Login() {
     email: '',
     password: '',
   });
-
+  const [errorMessage, setErrorMessage] = useState('');
   const [showForm, setShowForm] = useState(true);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
 
     try {
-      await login(loginData.email, loginData.password);
-      setShowForm(false);
+      const errorMsg = await login(loginData.email, loginData.password);
+      if (errorMsg) {
+        console.log(errorMsg);
+        setErrorMessage(errorMsg);
+      } else {
+        setShowForm(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -61,6 +66,7 @@ export default function Login() {
 
         <input className="bg-white" type="submit" />
       </form>
+      {errorMessage && <p className="text-xl bg-white rounded-md">{errorMessage}</p>}
     </>
   );
 }
