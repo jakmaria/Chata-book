@@ -173,9 +173,19 @@ export default function CreateEventForm(fn: Fn) {
               type="date"
               value={formState.start}
               onChange={(e) => {
-                setFormState({
-                  ...formState,
-                  start: e.target.value,
+                setFormState((prevState) => {
+                  // If the new start date is after the end date, reset the end date
+                  const newStartDate = e.target.value;
+                  let endDate = prevState.end;
+                  if (newStartDate >= endDate) {
+                    endDate = '';
+                  }
+
+                  return {
+                    ...prevState,
+                    start: newStartDate,
+                    end: endDate,
+                  };
                 });
               }}
             />
@@ -186,6 +196,7 @@ export default function CreateEventForm(fn: Fn) {
               className="font-bold text-red-600 border border-solid rounded-xl"
               required
               type="date"
+              min={formState.start}
               value={formState.end}
               onChange={(e) => {
                 setFormState({
