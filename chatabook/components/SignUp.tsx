@@ -75,6 +75,8 @@ export default function SignUp() {
     },
   });
 
+  const [showForm, setShowForm] = useState(true);
+
   const handleRegistration = async (e: any) => {
     e.preventDefault();
 
@@ -101,6 +103,7 @@ export default function SignUp() {
 
     try {
       const newUser = await createUser();
+      setShowForm(false);
       if (newUser.data.createUser.message === 'Daný email sa už používa.') {
         alert(newUser.data.createUser.message);
       }
@@ -125,6 +128,7 @@ export default function SignUp() {
     console.log('user.displayName', user.displayName);
   }
 
+  if (!showForm) return null;
   return (
     <>
       {!newUserData ? (
