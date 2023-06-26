@@ -42,6 +42,12 @@ export default function EventTile({
     variables: {
       id: event.id,
     },
+    onCompleted: () => {
+      setAllEvents((prevEvents) => prevEvents.filter((e) => e.id !== event.id));
+    },
+    onError: (error) => {
+      console.error('Error deleting event:', error);
+    },
   });
 
   return (
@@ -70,7 +76,7 @@ export default function EventTile({
             Počet apartmánov, ktorý budeme potrebovať:{' '}
             <span className="text-red-600">{event.appartments}</span>
           </p>
-          {event.message ? <p>{event.message}</p> : null}
+          {event.message ? <p className="text-red-600">{event.message}</p> : null}
           {event.userId === Number(userData?.userData?.id) && (
             <>
               <button
