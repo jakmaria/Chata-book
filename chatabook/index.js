@@ -6,10 +6,12 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => {
-    // Get the user token from the headers
+    const token = req.headers.authorization || '';
     const decodedToken = await admin.auth().verifyIdToken(token);
+    console.log('decoded token', decodedToken);
     const userId = decodedToken.uid;
-    return { userId };
+    const userEmail = decodedToken.email; // Assuming the token contains the email
+    return { userId, userEmail };
   },
 });
 

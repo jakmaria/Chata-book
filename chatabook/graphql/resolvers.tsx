@@ -14,6 +14,7 @@ export const resolvers = {
               id: true,
               name: true,
               surname: true,
+              roleId: true,
             },
           },
         },
@@ -24,7 +25,7 @@ export const resolvers = {
     },
     users: () => {
       return prisma.user.findMany({
-        select: { role: true, id: true, name: true, surname: true, email: true },
+        select: { role: true, id: true, name: true, surname: true, email: true, roleId: true },
       });
     },
     user: async (_: any, { email }: any) => {
@@ -49,7 +50,10 @@ export const resolvers = {
   },
   Mutation: {
     createEvent: async (_: any, args: EventWithUser) => {
+      console.log('at the beginning of createEvent mutation');
       try {
+        console.log('at the beginning of try catch block this is the args object', args);
+
         const newEvent = await prisma.event.create({
           data: {
             userId: args.userId,
@@ -62,7 +66,7 @@ export const resolvers = {
             message: args.message,
           },
         });
-        console.log(newEvent);
+        console.log('this is the new event from resolvers', newEvent);
         const newEventInfo = await prisma.event.findUnique({
           where: {
             id: newEvent.id,
@@ -77,6 +81,11 @@ export const resolvers = {
             },
           },
         });
+
+        console.log(
+          'newEventInfo that is supposed to be returned to the CreateEventForm',
+          newEventInfo
+        );
         return {
           code: 200,
           success: true,
@@ -151,6 +160,8 @@ export const resolvers = {
       }
     },
     deleteEvent: async (_: any, args: Event, context: { userEmail: string }) => {
+      // console.log('beginning of delete resolver');
+      // console.log('context', context);
       const eventToDelete = await prisma.event.findUnique({
         where: {
           id: Number(args.id),
@@ -159,6 +170,7 @@ export const resolvers = {
           user: true,
         },
       });
+      console.log('before checking who is deleting from context');
 
       const userDeleting = await prisma.user.findUnique({
         where: {
