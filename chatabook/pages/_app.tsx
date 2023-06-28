@@ -1,4 +1,3 @@
-import '../styles/main.scss';
 import '/styles/calendar.scss';
 import type { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';

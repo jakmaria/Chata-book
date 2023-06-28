@@ -23,14 +23,16 @@ export default function Main() {
 
   return (
     <>
-      <div className="ml-[35%] mr-[35%] mt-20 flex flex-col gap-[3rem]">
-        <h1 className="text-5xl mt-10 font-gloock max-md:text-orange-200 max-md:mt-55">Chata</h1>
+      <div className="ml-[35%] mr-[35%] mt-15 flex flex-col gap-[3rem]">
+        <h1 className="text-[100px] mt-10 font-nothing font-light max-md:text-orange-200 max-md:mt-55 text-center">
+          Chata
+        </h1>
         {!user && (
           <button
             onClick={showRegistrationForm}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+            className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border border-[#d4bc98] hover:border-[#1e2024] rounded-xl shadow font-ysabeau font-light text-xl "
           >
-            Zaregistruj sa
+            Zaregistrovať sa
           </button>
         )}
         {showRegister && <Register />}
@@ -40,16 +42,16 @@ export default function Main() {
               logout();
               router.push('/');
             }}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+            className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border border-[#d4bc98] hover:border-[#1e2024] rounded-xl shadow font-ysabeau font-light text-xl "
           >
-            Odhlásit sa
+            Odhlásiť sa
           </button>
         ) : (
           <button
             onClick={showLoginForm}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+            className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border border-[#d4bc98] hover:border-[#1e2024] rounded-xl shadow font-ysabeau font-light text-xl "
           >
-            Prihlás sa
+            Prihlásiť sa
           </button>
         )}
         {showLogin && <Login />}
@@ -58,10 +60,10 @@ export default function Main() {
             onClick={() => {
               router.push('/events');
             }}
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base"
+            className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border border-[#d4bc98] hover:border-[#1e2024] rounded-xl shadow font-ysabeau font-light text-xl "
           >
             {' '}
-            Zobrazit udalosti
+            Zobraziť udalosti
           </button>
         )}
       </div>

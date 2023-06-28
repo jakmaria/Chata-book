@@ -20,14 +20,20 @@ module.exports = {
     fontFamily: {
       gloock: ['Gloock'],
       abril: ['Abril'],
+      rajdhani: ['Rajdhani'],
+      bodoni: ['Bodoni Moda'],
+      julius: ['Julius Sans One'],
+      ysabeau: ['Ysabeau SC'],
+      rainbow: ['Over the rainbow'],
+      nothing: ['Nothing you could do'],
     },
     fontSize: {
       // 10px
       sm: ['1rem', '1.3rem'],
       // 16px
-      base: ['1.6rem', '2rem'],
+      base: ['1.8rem', '2rem'],
       // 20px
-      lg: ['2.2rem', '2.5rem'],
+      lg: ['2rem', '2.5rem'],
       // 25px
       xl: ['2.5rem', '2.8rem'],
       // 30px
@@ -44,6 +50,7 @@ module.exports = {
       '4.5xl': ['6rem', '5.2rem'],
       // 75px
       '5xl': ['7.5rem', '7.7rem'],
+      '6xl': ['9.5rem', '8.7rem'],
     },
     spacing: {
       0: '0',
