@@ -88,10 +88,6 @@ export default function CreateEventForm(fn: Fn) {
     },
   });
 
-  // useEffect(() => {
-  //   console.log(formState, 'user id is undefined', formState.userId == undefined);
-  // }, [formState]);
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
   return (
@@ -124,10 +120,10 @@ export default function CreateEventForm(fn: Fn) {
           }
 
           const data = await createEvent();
-          console.log(
-            'submit button was ckicked, awaited createEvent and this is the createEvent response',
-            data.data.createEvent
-          );
+          // console.log(
+          //   'submit button was ckicked, awaited createEvent and this is the createEvent response',
+          //   data.data.createEvent
+          // );
           if (data && data.data && data.data.createEvent.event !== null) {
             const newEventData: EventWithUser = data.data.createEvent.event;
             fn.getUpdatedData((prev: EventWithUser[]) =>

@@ -6,7 +6,6 @@ export default function Header() {
   const user = auth.currentUser;
   const userData = useAuth();
 
-  console.log(userData);
   let roleMessage;
 
   if (userData?.userData?.role) {

@@ -120,7 +120,6 @@ export default function SignUp() {
       }
       await setNewUserData(newUser.data.createUser.user);
       setShowForm(false);
-      console.log('createuser opoved', newUser.data.createUser.user);
     } catch (err) {
       console.log(err);
     }
@@ -130,7 +129,7 @@ export default function SignUp() {
     updateProfile(user, {
       displayName: newUserData.name,
     });
-    console.log('user.displayName', user.displayName);
+    // console.log('user.displayName', user.displayName);
   }
 
   if (!showForm) return null;

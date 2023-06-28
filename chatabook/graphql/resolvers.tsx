@@ -81,10 +81,6 @@ export const resolvers = {
           },
         });
 
-        console.log(
-          'newEventInfo that is supposed to be returned to the CreateEventForm',
-          newEventInfo
-        );
         return {
           code: 200,
           success: true,
@@ -159,8 +155,6 @@ export const resolvers = {
       }
     },
     deleteEvent: async (_: any, args: Event) => {
-      // console.log('beginning of delete resolver');
-      // console.log('context', context);
       const eventToDelete = await prisma.event.findUnique({
         where: {
           id: Number(args.id),
