@@ -284,7 +284,7 @@ export default function CreateEventForm(fn: Fn) {
           </label>
         </div>
         <button
-          className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau font-extralight text-lg bg-opacity-90 mt-3  min-w-[50%] max-w-lg m"
+          className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau font-extralight text-lg bg-opacity-90 mt-3  min-w-[50%] max-w-lg "
           type="submit"
         >
           Vytvoriť udalost

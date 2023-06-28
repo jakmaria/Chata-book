@@ -88,7 +88,7 @@ export default function EditEventForm({
   });
 
   useEffect(() => {
-    console.log('magic', editFormState, typeof new Date(editFormState.start));
+    // console.log('magic', editFormState, typeof new Date(editFormState.start));
   }, [editFormState]);
 
   if (loading) return <p>Loading...</p>;
@@ -97,7 +97,7 @@ export default function EditEventForm({
   return (
     <div>
       <form
-        className="bg-white mr-auto ml-auto min-w-[45vw] max-w-[60vw] text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock opacity-80"
+        className="flex flex-col mr-auto ml-auto bg-gray-200 min-w-[50vw] max-w-[60vw] text-gray-800 font-medium py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
         onSubmit={(e) => {
           e.preventDefault();
           editEvent();
@@ -122,10 +122,10 @@ export default function EditEventForm({
           setEdit(false);
         }}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1 ">
           <h3>Kto objednáva?</h3>
           <select
-            className="font-bold text-red-600 border border-solid rounded-xl"
+            className="ont-light text-[#d4bc98] bg-[#1e2024] p-1 border-gray-800  rounded-xl"
             required
             value={editFormState.userId}
             onChange={(e) => {
@@ -144,7 +144,7 @@ export default function EditEventForm({
           <label>
             Príležitost:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="text-[#d4bc98] bg-[#1e2024] p-1 border-gray-800  rounded-xl ml-2"
               required
               type="text"
               value={editFormState.occassion}
@@ -159,7 +159,7 @@ export default function EditEventForm({
           <label className="flex flex-col">
             Od:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] bg-opacity-50 p-1 border-gray-800  rounded-xl"
               required
               type="date"
               value={editFormState.start}
@@ -174,7 +174,7 @@ export default function EditEventForm({
           <label className="flex flex-col">
             Do:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] bg-opacity-50 p-1 border-gray-800  rounded-xl"
               required
               type="date"
               value={editFormState.end}
@@ -189,7 +189,7 @@ export default function EditEventForm({
           <label>
             Počet ludí:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-1 border-gray-800  rounded-xl ml-2"
               required
               type="number"
               value={editFormState.people}
@@ -204,7 +204,7 @@ export default function EditEventForm({
           <label>
             Chceme mat celú chatu pre seba:
             <select
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-1 border-gray-800  rounded-xl ml-2"
               required
               onChange={(e) => {
                 e.target.value == 'Áno'
@@ -225,7 +225,7 @@ export default function EditEventForm({
           <label>
             Počet využitych apartmánov:
             <select
-              className="font-bold  text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-1 border-gray-800  rounded-xl ml-2"
               required
               value={editFormState.appartments}
               onChange={(e) => {
@@ -243,7 +243,7 @@ export default function EditEventForm({
           <label className="flex flex-col">
             Extra info
             <textarea
-              className="font-bold border-solid border-[2px] rounded-md border-black"
+              className="font-extralight text-base leading-9 border-[2px] rounded-xl border-black text-[#d4bc98] bg-[#1e2024] p-1 mt-1 min-h-[90px]"
               placeholder="Ktoré apartmány využijete, čas odchodu, prípadne extra info k udalosti."
               value={editFormState.message}
               onChange={(e) => {
@@ -256,7 +256,7 @@ export default function EditEventForm({
           </label>
         </div>
         <button
-          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white"
+          className=" bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau font-extralight text-lg bg-opacity-90 mt-3  min-w-[50%] max-w-lg  "
           type="submit"
         >
           Upravit udalost
