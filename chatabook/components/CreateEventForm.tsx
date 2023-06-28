@@ -94,11 +94,10 @@ export default function CreateEventForm(fn: Fn) {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-
   return (
     <div>
       <form
-        className="bg-white min-w-[45vw] max-w-[60vw] text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock opacity-80"
+        className="bg-gray-200 min-w-[50vw] max-w-[60vw] text-gray-800 font-medium py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
         onSubmit={async (e) => {
           e.preventDefault();
 
@@ -125,18 +124,26 @@ export default function CreateEventForm(fn: Fn) {
           }
 
           const data = await createEvent();
-          const newEventData: EventWithUser = data.data.createEvent.event;
-          fn.getUpdatedData((prev: EventWithUser[]) =>
-            [...prev, newEventData].sort((a, b) => b.id - a.id)
+          console.log(
+            'submit button was ckicked, awaited createEvent and this is the createEvent response',
+            data.data.createEvent
           );
-          fn.showForm(false);
+          if (data && data.data && data.data.createEvent.event !== null) {
+            const newEventData: EventWithUser = data.data.createEvent.event;
+            fn.getUpdatedData((prev: EventWithUser[]) =>
+              [...prev, newEventData].sort((a, b) => b.id - a.id)
+            );
+            fn.showForm(false);
+          } else {
+            console.error('Mutation returned null or undefined');
+          }
         }}
       >
         <div className="flex flex-col gap-3">
           <h3>Kto objednáva?</h3>
 
           <select
-            className="font-bold text-red-600 border border-solid rounded-xl"
+            className="font-light text-[#d4bc98] bg-[#1e2024] p-2 border-gray-800  rounded-xl"
             required
             value={formState.userId}
             onChange={(e) => {
@@ -153,7 +160,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Príležitost:
             <input
-              className="text-red-600 border border-solid rounded-xl"
+              className="text-[#d4bc98] bg-[#1e2024] p-2 border-gray-800  rounded-xl ml-2"
               required
               type="text"
               value={formState.occassion}
@@ -168,7 +175,7 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Od:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] bg-opacity-50 p-2 border-gray-800  rounded-xl"
               required
               type="date"
               value={formState.start}
@@ -193,7 +200,7 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Do:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] bg-opacity-50 p-2 border-gray-800  rounded-xl"
               required
               type="date"
               min={formState.start}
@@ -209,9 +216,10 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Počet ludí:
             <input
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-2 border-gray-800  rounded-xl ml-2"
               required
               type="number"
+              min={1}
               value={formState.people}
               onChange={(e) => {
                 setFormState({
@@ -224,7 +232,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Chceme mat celú chatu pre seba:
             <select
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-2 border-gray-800  rounded-xl ml-2"
               required
               onChange={(e) => {
                 e.target.value == 'Áno'
@@ -245,7 +253,7 @@ export default function CreateEventForm(fn: Fn) {
           <label>
             Počet využitych apartmánov:
             <select
-              className="font-bold text-red-600 border border-solid rounded-xl"
+              className="font-light text-[#d4bc98] bg-[#1e2024] p-2 border-gray-800  rounded-xl ml-2"
               required
               value={formState.appartments}
               onChange={(e) => {
@@ -263,8 +271,8 @@ export default function CreateEventForm(fn: Fn) {
           <label className="flex flex-col">
             Extra info
             <textarea
-              className="font-bold border-solid border-[2px] rounded-md border-black text-red-600"
-              placeholder="Ktoré apartmány využijete, čas odchodu, prípadne extra info k udalosti."
+              className="font-extralight text-base leading-9 border-[2px] rounded-xl border-black text-[#d4bc98] bg-[#1e2024] p-2 mt-1 min-h-[90px]"
+              placeholder="Ktoré apartmány využijete, čas príchodu/odchodu, prípadne extra info k udalosti."
               value={formState.message}
               onChange={(e) => {
                 setFormState({
@@ -276,10 +284,10 @@ export default function CreateEventForm(fn: Fn) {
           </label>
         </div>
         <button
-          className="border-solid border-[2px] rounded-md border-black mt-3 bg-white py-1 px-2"
+          className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau font-extralight text-lg bg-opacity-90 mt-3  min-w-[50%] max-w-lg m"
           type="submit"
         >
-          Vytvorit udalost
+          Vytvoriť udalost
         </button>
       </form>
     </div>

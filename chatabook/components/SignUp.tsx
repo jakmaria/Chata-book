@@ -61,7 +61,7 @@ export default function SignUp() {
     password: '',
     email: '',
     telephone: '',
-    roleId: 1,
+    roleId: 3,
   });
 
   const [createUser] = useMutation(CREATE_USER_MUTATION, {
@@ -137,9 +137,15 @@ export default function SignUp() {
   return (
     <>
       {!newUserData ? (
-        <form className="flex flex-col gap-1 w-50" onSubmit={handleRegistration}>
-          <label>Meno</label>
+        <form
+          className="flex flex-col gap-0 bg-gray-200 text-gray-800 font-semibold py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
+          onSubmit={handleRegistration}
+        >
+          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+            Meno
+          </label>
           <input
+            className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-opacity-7 bg-gray-200"
             required
             type="text"
             value={registrationData.name}
@@ -151,8 +157,11 @@ export default function SignUp() {
               })
             }
           />
-          <label>Priezvisko</label>
+          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+            Priezvisko
+          </label>
           <input
+            className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             required
             type="text"
             value={registrationData.surname}
@@ -164,8 +173,11 @@ export default function SignUp() {
               })
             }
           />
-          <label>Heslo</label>
+          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+            Heslo
+          </label>
           <input
+            className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="password"
             required
             value={registrationData.password}
@@ -177,8 +189,11 @@ export default function SignUp() {
               })
             }
           />
-          <label>E-mail</label>
+          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+            E-mail
+          </label>
           <input
+            className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="email"
             required
             value={registrationData.email}
@@ -190,8 +205,11 @@ export default function SignUp() {
               })
             }
           />
-          <label>Tel. číslo</label>
+          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+            Tel. číslo
+          </label>
           <input
+            className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="text"
             required
             placeholder="Tel. číslo vo formáte +421"
@@ -204,11 +222,16 @@ export default function SignUp() {
             }
           />
 
-          <input className="bg-white" type="submit" />
+          <button
+            className="bg-[#1e2024] hover:bg-[#a6b6c1] bg-opacity-90 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border-2 border-[#1e2024] hover:border-[#1e2024] rounded-xl shadow font-ysabeau text-lg font-medium mt-3"
+            type="submit"
+          >
+            Potvrdiť
+          </button>
         </form>
       ) : (
         user && (
-          <p className="bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-base">
+          <p className="bg-white  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-ysabeau text-base">
             Novy uzivatel {newUserData.name} {newUserData.surname} bol vytvoreny, prihlásenie
             prebehlo automaticky.
           </p>

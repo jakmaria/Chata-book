@@ -53,43 +53,52 @@ export default function EventTile({
   return (
     <>
       {!edit ? (
-        <div className="text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow font-gloock text-[18px] mt-2 mb-2 mr-auto ml-auto flex flex-col bg-[#ACD7E5] min-w-[45vw] max-w-[60vw] opacity-80">
-          <h1>
-            Udalosť: <span className="text-red-600">{event.occassion}</span>
+        <div className=" py-4 px-6 border border-gray-600 rounded-xl shadow font-ysabeau font-normal text-lg mt-1 mb-2 mr-auto ml-auto flex flex-col bg-[#939791] min-w-[50vw] max-w-[55vw] bg-opacity-80 ">
+          <h1 className=" shadow-md py-2 px-3 bg-[#1e2024] bg-opacity-90 rounded-md text-xl text-[#939791] text-center">
+            Zodpovedná osoba:{' '}
+            <span className="text-[#d4bc98] ml-1 font-medium">{event.user.name}</span>
           </h1>
-          <p>
-            Od: <span className="text-red-600">{createDate(event.start)}</span>
-          </p>
-          <p>
-            Do: <span className="text-red-600">{createDate(event.end)}</span>
-          </p>
-          <h1>
-            Zodpovedná osoba: <span className="text-red-600">{event.user.name}</span>
+          <h1 className="shadow-md text-[#1e2024]  py-2 px-3 bg-[#d4bc98] bg-opacity-90 rounded-md mb-1 font-medium text-center">
+            Udalosť: <span className="text-[#1e2024] ml-1 ">{event.occassion}</span>
           </h1>
-          <p>
-            Počet ľudí: <span className="text-red-600">{event.people}</span>
-          </p>
-          <p>
-            Celá chata: <span className="text-red-600">{yesOrNo(event.whole)}</span>
-          </p>
-          <p>
-            Počet apartmánov, ktorý budeme potrebovať:{' '}
-            <span className="text-red-600">{event.appartments}</span>
-          </p>
-          {event.message ? <p className="text-red-600">{event.message}</p> : null}
+          <div className="text-base mt-2 bg-[#1e2024] bg-opacity-90 rounded-md px-3 py-3 font-medium leading-9 text-[#939791]">
+            {' '}
+            <p className="border-b-2  border-[#d4bc98] border-opacity-30 py-1">
+              Počet ľudí: <span className="text-[#d4bc98] ml-1">{event.people}</span>
+            </p>
+            <p className="border-b-2  border-[#d4bc98] border-opacity-30 py-1">
+              Celá chata/súkromie:{' '}
+              <span className="text-[#d4bc98] ml-1">{yesOrNo(event.whole)}</span>
+            </p>
+            <p className="border-b-2  border-[#d4bc98] border-opacity-30 py-1">
+              Od: <span className="text-[#d4bc98] ml-1">{createDate(event.start)}</span>
+            </p>
+            <p className="border-b-2  border-[#d4bc98] border-opacity-30 py-1">
+              Do: <span className="text-[#d4bc98] ml-1">{createDate(event.end)}</span>
+            </p>
+            <p className="border-b-2  border-[#d4bc98] border-opacity-30 py-1">
+              Počet apartmánov: <span className="text-[#d4bc98] ml-1">{event.appartments}</span>
+            </p>
+          </div>
+
+          {event.message ? (
+            <p className="mt-3 text-[#2c320e] font-medium shadow-lg p-1  bg-[#d4bc98] bg-opacity-60 rounded-md text-base">
+              {event.message}
+            </p>
+          ) : null}
           {event.userId === Number(userData?.userData?.id) && (
             <>
               <button
                 onClick={() => setEdit(true)}
-                className="border-black rounded-md border-solid border-[3px] mb-1"
+                className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-1 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau text-lg bg-opacity-90 mt-3  min-w-[50%] max-w-lg ml-auto mr-auto"
               >
-                Upravit
+                Upraviť
               </button>
               <button
                 onClick={() => deleteEvent()}
-                className="border-black rounded-md border-solid border-[3px] mb-1"
+                className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-1 px-1 border border-[#d4bc98]  rounded-xl shadow-lg font-ysabeau text-lg bg-opacity-90 mt-1 min-w-[50%] max-w-lg ml-auto mr-auto"
               >
-                Vymazat
+                Vymazať
               </button>
             </>
           )}

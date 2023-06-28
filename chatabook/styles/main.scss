@@ -1,2 +1,10 @@
 @import './base/fonts.scss';
 @import './base/globals.scss';
+
+$event-bg: #807d5b;
+$event-bottom-right-border-radius: 12px;
+$event-padding: 0px;
+$out-of-range-color: rgb(106, 100, 100);
+$out-of-range-bg-color: rgb(170, 162, 162);
+
+@import '~react-big-calendar/lib/sass/styles.scss';
