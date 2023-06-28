@@ -15,7 +15,7 @@ export default function Header() {
         roleMessage = 'Máš len základnú rolu, môžeš sa maximálne odhlásiť.';
         break;
       case 'guest':
-        roleMessage = 'Si tu hosť. Môžeš udalosti len sledovať, ale nič viac..';
+        roleMessage = 'Si tu hosť. Môžeš udalosti len sledovať, ale nič viac.';
         break;
       case 'user':
         roleMessage = `Vitaj ${user?.displayName}! Teraz môžeš vytvárať udalosti a upravovať ich.`;
@@ -30,11 +30,13 @@ export default function Header() {
 
   return (
     <>
-      <div className="ml-auto mr-auto mt-2 bg-[#d4bc98] text-[#1e2024] py-2 px-20 text-center  border border-[#1e2024] shadow-md border-opacity-40 rounded-xl font-ysabeau font-light text-lg leading-[40px] bg-opacity-20">
-        {user?.displayName ? <p>Prihlásený užívateľ je {user.displayName}.</p> : null}
-        {userData?.userData?.role && user?.displayName !== null ? <h1>{roleMessage}</h1> : null}
-        {/* {userData?.userData?.roleId ? <h1>Role number is {userData.userData.roleId}</h1> : null} */}
-      </div>
+      {userData?.userData?.role && user?.displayName !== null ? (
+        <div className="ml-auto mr-auto mt-2 bg-[#d4bc98] text-[#1e2024] py-2 px-20 text-center  border border-[#1e2024] shadow-md border-opacity-40 rounded-xl font-ysabeau font-light text-lg leading-[40px] bg-opacity-20">
+          {/* {user?.displayName ? <p>Prihlásený užívateľ je {user.displayName}.</p> : null} */}
+          {<h1>{roleMessage}</h1>}
+          {/* {userData?.userData?.roleId ? <h1>Role number is {userData.userData.roleId}</h1> : null} */}
+        </div>
+      ) : null}
     </>
   );
 }
