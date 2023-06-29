@@ -10,7 +10,7 @@
   background-color: rgb(229 231 235);
   font-family: 'Ysabeau SC';
   width: 55%;
-  height: 55vh;
+  min-height: 55vh;
   padding: 10px;
 }
 
