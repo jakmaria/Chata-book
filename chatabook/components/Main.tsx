@@ -21,8 +21,9 @@ export default function Main() {
     setShowRegister(false);
   };
 
-  let titleColor = !user && (showRegister || showLogin) ? '[#1e2024]' : 'orange-200';
+  let titleColor = showRegister || showLogin ? '[#1e2024]' : 'orange-200';
   let titleMargin = showRegister || showLogin ? 'mt-5' : 'mt-55';
+
   if (user) {
     titleMargin = 'mt-30';
     titleColor = 'orange-200';

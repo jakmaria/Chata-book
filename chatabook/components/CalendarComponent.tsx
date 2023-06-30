@@ -20,7 +20,9 @@ export default function CalendarComponent({ eventsdata }: CalendarProps) {
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={(event) =>
-          alert(`There is a ${event.occassion} by ${event.user.name}. ${event.message}`)
+          alert(
+            `Je tu ${event.occassion}, usporiadateľ je ${event.user.name}. Bude tam ${event.people} ľudí. Počet využitých apartmánov: ${event.appartments}. ${event.message}`
+          )
         }
         messages={{
           next: 'Nasledujúci',
