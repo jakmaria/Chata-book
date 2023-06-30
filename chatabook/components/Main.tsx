@@ -21,10 +21,20 @@ export default function Main() {
     setShowRegister(false);
   };
 
+  const titleColor = !user && (showRegister || showLogin) ? '[#1e2024]' : 'orange-200';
+  let titleMargin = showRegister || showLogin ? 'mt-5' : 'mt-55';
+  if (user) {
+    titleMargin = 'mt-30';
+  }
+
   return (
     <>
-      <div className="ml-[35%] mr-[35%] mt-15 flex flex-col gap-[3rem]">
-        <h1 className="text-[100px] mt-10 font-nothing font-light max-md:text-orange-200 max-md:mt-55 text-center">
+      <div
+        className={`ml-[35%] mr-[35%] mt-15 flex flex-col gap-5 max-md:ml-[10%] max-md:mr-[10%] max-md:${titleMargin}`}
+      >
+        <h1
+          className={`text-[100px] mt-10 font-nothing font-light max-md:text-${titleColor} text-center max-md:mt-0`}
+        >
           Chata
         </h1>
         {!user && (

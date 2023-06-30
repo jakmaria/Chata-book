@@ -54,8 +54,8 @@ export default function EventTile({
   return (
     <>
       {!edit ? (
-        <div className=" py-4 px-6 border border-gray-600 rounded-xl shadow font-ysabeau font-normal text-lg mt-1 mb-2 mr-auto ml-auto flex flex-col bg-[#939791] min-w-[50vw] max-w-[55vw] bg-opacity-80 ">
-          <h1 className=" shadow-md py-2 px-3 bg-[#1e2024] bg-opacity-90 rounded-md text-xl text-[#939791] text-center">
+        <div className=" py-4 max-md:py-3 px-6 max-md:px-4 border border-gray-600 rounded-xl shadow font-ysabeau font-normal text-lg max-md:text-base mt-1 max-md:mt-0 mb-2 max-md:mb-0 mr-auto ml-auto flex flex-col bg-[#939791] min-w-[50vw] max-w-[55vw] max-md:min-w-[90vw] bg-opacity-80 ">
+          <h1 className=" shadow-md py-2 px-3 bg-[#1e2024] bg-opacity-90 rounded-md text-xl max-md:text-lg text-[#939791] text-center">
             Zodpovedná osoba:{' '}
             <span className="text-[#d4bc98] ml-1 font-medium">{event.user.name}</span>
           </h1>

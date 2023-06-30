@@ -20,6 +20,11 @@ export const resolvers = {
             },
           },
         },
+        where: {
+          start: {
+            gt: new Date(),
+          },
+        },
         orderBy: {
           start: 'asc',
         },

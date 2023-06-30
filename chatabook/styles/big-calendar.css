@@ -103,3 +103,18 @@
 .rbc-event:hover {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
+
+@media only screen and (max-width: 600px) {
+  .rbc-calendar {
+    width: 90%;
+    min-height: 60vh;
+  }
+
+  .rbc-event-content {
+    font-size: x-small;
+  }
+
+  .rbc-month-row {
+    min-height: 20px;
+  }
+}

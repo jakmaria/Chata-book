@@ -98,7 +98,7 @@ export default function EditEventForm({
   return (
     <div>
       <form
-        className="flex flex-col mr-auto ml-auto bg-gray-200 min-w-[50vw] max-w-[60vw] text-gray-800 font-medium py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
+        className="flex flex-col mr-auto ml-auto bg-gray-200 min-w-[50vw] max-w-[60vw] max-md:min-w-[80vw] max-md:max-w-[90vw] text-gray-800 font-medium py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
         onSubmit={(e) => {
           e.preventDefault();
           editEvent();

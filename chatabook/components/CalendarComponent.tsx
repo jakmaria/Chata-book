@@ -25,7 +25,7 @@ export default function CalendarComponent({ eventsdata }: CalendarProps) {
         messages={{
           next: 'Nasledujúci',
           previous: 'Predchádzajúci',
-          today: 'Dnes',
+          today: 'Aktuálny',
           month: 'Mesiac',
           week: 'Týždeň',
           day: 'Deň',

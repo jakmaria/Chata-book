@@ -5,6 +5,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { User } from '@prisma/client';
 import { getAuth, updateProfile } from 'firebase/auth';
 import validator from 'validator';
+import Label from './Label';
 
 type FormData = {
   name: string;
@@ -61,7 +62,7 @@ export default function SignUp() {
     password: '',
     email: '',
     telephone: '',
-    roleId: 3,
+    roleId: 2,
   });
 
   const [createUser] = useMutation(CREATE_USER_MUTATION, {
@@ -140,15 +141,20 @@ export default function SignUp() {
           className="flex flex-col gap-0 bg-gray-200 text-gray-800 font-semibold py-2 px-4 border border-gray-600 rounded-xl shadow font-ysabeau bg-opacity-70"
           onSubmit={handleRegistration}
         >
-          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
+          {/* <label
+            htmlFor="name"
+            className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2"
+          >
             Meno
-          </label>
+          </label> */}
+          <Label htmlFor="name" text="Meno" />
           <input
             className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-opacity-7 bg-gray-200"
             required
+            id="name"
             type="text"
             value={registrationData.name}
-            placeholder="Meno"
+            placeholder=""
             onChange={(e) =>
               setRegistrationData({
                 ...registrationData,
@@ -156,15 +162,14 @@ export default function SignUp() {
               })
             }
           />
-          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
-            Priezvisko
-          </label>
+          <Label htmlFor="surname" text="Priezvisko" />
           <input
             className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             required
+            id="surname"
             type="text"
             value={registrationData.surname}
-            placeholder="Priezvisko"
+            placeholder=""
             onChange={(e) =>
               setRegistrationData({
                 ...registrationData,
@@ -172,15 +177,14 @@ export default function SignUp() {
               })
             }
           />
-          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
-            Heslo
-          </label>
+          <Label htmlFor="password" text="Heslo" />
           <input
             className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="password"
+            id="password"
             required
             value={registrationData.password}
-            placeholder="Heslo"
+            placeholder=""
             onChange={(e) =>
               setRegistrationData({
                 ...registrationData,
@@ -188,15 +192,15 @@ export default function SignUp() {
               })
             }
           />
-          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
-            E-mail
-          </label>
+          <Label htmlFor="email" text="E-mail" />
+
           <input
             className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="email"
+            id="email"
             required
             value={registrationData.email}
-            placeholder="E-mail"
+            placeholder=""
             onChange={(e) =>
               setRegistrationData({
                 ...registrationData,
@@ -204,14 +208,13 @@ export default function SignUp() {
               })
             }
           />
-          <label className="font-light text-[#1e2024] bg-[#a6b6c1] p-1 border-2 border-[#1e2024] bg-opacity-90 rounded-xl rounded-b-none text-center mt-2">
-            Tel. číslo
-          </label>
+          <Label htmlFor="tel" text="Tel. číslo" />
           <input
             className="rounded-xl  rounded-t-none border-2 border-[#1e2024] border-t-0 p-1 text-center bg-gray-200 bg-opacity-7"
             type="text"
+            id="tel"
             required
-            placeholder="Tel. číslo vo formáte +421"
+            placeholder="vo formáte +421"
             value={registrationData.telephone}
             onChange={(e) =>
               setRegistrationData({

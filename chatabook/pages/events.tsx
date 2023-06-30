@@ -83,7 +83,12 @@ export default function Events() {
   };
 
   if (networkStatus === NetworkStatus.refetch) return 'Refetching!';
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <p className="text-[#d4bc98] bg-[#1e2024] bg-opacity-90 py-2 px-4 border border-[#d4bc98] rounded-xl shadow font-ysabeau font-extralight text-lg mt-10 ml-auto mr-auto">
+        Loading...
+      </p>
+    );
   if (error) return <p>Oh no... {error.message}</p>;
 
   console.log('allEvents', allEvents);
@@ -94,7 +99,7 @@ export default function Events() {
         <div className="bg-view bg-cover bg-scroll min-h-[100vh]  h-[100%] flex flex-col gap-6">
           <div className="ml-auto mr-auto"> {user && <Header />}</div>
           <CalendarComponent eventsdata={calendarEvents} />
-          <div className="flex flex-col gap-3 justify-content-center ml-auto mr-auto">
+          <div className="flex flex-col gap-3 max-md:gap-1 justify-content-center ml-auto mr-auto">
             {userData.userData.roleId > 2 && (
               <button
                 className="bg-[#1e2024] hover:bg-[#d4bc98] hover:bg-opacity-80 hover:text-[#1e2024] text-[#d4bc98]  py-2 px-4 border border-[#d4bc98] hover:border-[#1e2024] rounded-xl shadow font-ysabeau font-extralight text-lg bg-opacity-90 "
