@@ -25,7 +25,7 @@ module.exports = {
       julius: ['Julius Sans One'],
       ysabeau: ['Ysabeau SC'],
       rainbow: ['Over the rainbow'],
-      nothing: ['Nothing you could do'],
+      nothing: ['Nothing You Could do'],
     },
     fontSize: {
       // 10px
