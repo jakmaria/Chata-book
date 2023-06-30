@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { EventTileType } from './EventTile';
 import { createDate } from '@/scripts/createDate';
 import { EventWithUser } from '@/pages/events';
+import { useAuth } from '@/context/AuthContext';
 
 const AllNamesQuery = gql`
   query {
@@ -28,6 +29,7 @@ const EDIT_EVENT_MUTATION = gql`
     $whole: Boolean!
     $appartments: Int!
     $message: String
+    $email: String!
   ) {
     editEvent(
       id: $id
@@ -39,6 +41,7 @@ const EDIT_EVENT_MUTATION = gql`
       whole: $whole
       appartments: $appartments
       message: $message
+      email: $email
     ) {
       event {
         id
@@ -60,6 +63,7 @@ export default function EditEventForm({
   setAllEvents: Dispatch<SetStateAction<EventWithUser[]>>;
 }) {
   const { data, loading, error } = useQuery(AllNamesQuery);
+  const userData = useAuth();
 
   const [editFormState, setEditFormState] = useState({
     id: eventInfo.id,
@@ -84,12 +88,9 @@ export default function EditEventForm({
       whole: editFormState.whole,
       appartments: editFormState.appartments,
       message: editFormState.message,
+      email: userData.userData.email,
     },
   });
-
-  useEffect(() => {
-    // console.log('magic', editFormState, typeof new Date(editFormState.start));
-  }, [editFormState]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;

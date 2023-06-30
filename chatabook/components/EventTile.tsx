@@ -21,8 +21,8 @@ export type EventTileType = {
 };
 
 const DELETE_EVENT_MUTATION = gql`
-  mutation deleteMutation($id: ID!) {
-    deleteEvent(id: $id) {
+  mutation deleteMutation($id: ID!, $email: String!) {
+    deleteEvent(id: $id, email: $email) {
       id
     }
   }
@@ -41,6 +41,7 @@ export default function EventTile({
   const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
     variables: {
       id: event.id,
+      email: userData.user.email,
     },
     onCompleted: () => {
       setAllEvents((prevEvents) => prevEvents.filter((e) => e.id !== event.id));

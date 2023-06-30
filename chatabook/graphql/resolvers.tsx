@@ -2,9 +2,7 @@ import { EventWithUser } from '@/pages/events';
 import { createDate } from '@/scripts/createDate';
 import { Event, User, User_role } from '@prisma/client';
 import validator from 'validator';
-
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from '@/lib/prisma';
 
 export const resolvers = {
   Query: {
@@ -97,7 +95,7 @@ export const resolvers = {
         };
       }
     },
-    editEvent: async (_: any, args: Event) => {
+    editEvent: async (_: any, args: Event & { email: string }) => {
       try {
         const eventToEdit = await prisma.event.findUnique({
           where: {
@@ -108,22 +106,22 @@ export const resolvers = {
           },
         });
 
-        // const userEditing = await prisma.user.findUnique({
-        //   where: {
-        //     email: context.userEmail,
-        //   },
-        // });
+        const userEditing = await prisma.user.findUnique({
+          where: {
+            email: args.email,
+          },
+        });
 
         if (!eventToEdit) {
           throw new Error('Event not found');
         }
 
-        // if (userEditing && userEditing?.roleId < 3) {
-        //   throw new Error('Your role is not strong enought to edit events');
-        // }
-        // if (eventToEdit.user.email !== context.userEmail) {
-        //   throw new Error('You are unauthorized to edit this event');
-        // }
+        if (userEditing && userEditing?.roleId < 3) {
+          throw new Error('Your role is not strong enought to edit events');
+        }
+        if (eventToEdit.user.email !== args.email) {
+          throw new Error('You are unauthorized to edit this event');
+        }
 
         const changeEvent = await prisma.event.update({
           where: {
@@ -154,7 +152,9 @@ export const resolvers = {
         };
       }
     },
-    deleteEvent: async (_: any, args: Event) => {
+    deleteEvent: async (_: any, args: Event & { email: string }) => {
+      console.log(args);
+
       const eventToDelete = await prisma.event.findUnique({
         where: {
           id: Number(args.id),
@@ -165,22 +165,22 @@ export const resolvers = {
       });
       console.log('before checking who is deleting from context');
 
-      // const userDeleting = await prisma.user.findUnique({
-      //   where: {
-      //     email: context.userEmail,
-      //   },
-      // });
+      const userDeleting = await prisma.user.findUnique({
+        where: {
+          email: args.email,
+        },
+      });
 
       if (!eventToDelete) {
         throw new Error('Event not found');
       }
 
-      // if (userDeleting && userDeleting?.roleId < 3) {
-      //   throw new Error('Your role is not strong enought to delete events');
-      // }
-      // if (eventToDelete.user.email !== context.userEmail) {
-      //   throw new Error('You are unauthorized to delete this event');
-      // }
+      if (userDeleting && userDeleting?.roleId < 3) {
+        throw new Error('Your role is not strong enought to delete events');
+      }
+      if (eventToDelete.user.email !== args.email) {
+        throw new Error('You are unauthorized to delete this event');
+      }
 
       return prisma.event.delete({
         where: {

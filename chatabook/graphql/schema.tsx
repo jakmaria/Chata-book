@@ -80,6 +80,7 @@ export const typeDefs = gql`
       whole: Boolean!
       appartments: Int!
       message: String
+      email: String!
     ): EventChangeResponse!
 
     createUser(
@@ -90,6 +91,6 @@ export const typeDefs = gql`
       roleId: Int!
     ): UserChangeResponse!
 
-    deleteEvent(id: ID!): Event!
+    deleteEvent(id: ID!, email: String!): Event!
   }
 `;
