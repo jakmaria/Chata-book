@@ -91,8 +91,6 @@ export default function Events() {
     );
   if (error) return <p>Oh no... {error.message}</p>;
 
-  console.log('allEvents', allEvents);
-
   return (
     <>
       {userData.userData.roleId > 1 ? (

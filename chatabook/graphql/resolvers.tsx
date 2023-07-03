@@ -160,8 +160,6 @@ export const resolvers = {
       }
     },
     deleteEvent: async (_: any, args: Event & { email: string }) => {
-      console.log(args);
-
       const eventToDelete = await prisma.event.findUnique({
         where: {
           id: Number(args.id),
@@ -170,7 +168,6 @@ export const resolvers = {
           user: true,
         },
       });
-      console.log('before checking who is deleting from context');
 
       const userDeleting = await prisma.user.findUnique({
         where: {

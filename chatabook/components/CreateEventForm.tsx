@@ -120,10 +120,7 @@ export default function CreateEventForm(fn: Fn) {
           }
 
           const data = await createEvent();
-          // console.log(
-          //   'submit button was ckicked, awaited createEvent and this is the createEvent response',
-          //   data.data.createEvent
-          // );
+
           if (data && data.data && data.data.createEvent.event !== null) {
             const newEventData: EventWithUser = data.data.createEvent.event;
             fn.getUpdatedData((prev: EventWithUser[]) =>
