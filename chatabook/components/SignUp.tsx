@@ -62,7 +62,7 @@ export default function SignUp() {
     password: '',
     email: '',
     telephone: '',
-    roleId: 1,
+    roleId: 3,
   });
 
   const [createUser] = useMutation(CREATE_USER_MUTATION, {
