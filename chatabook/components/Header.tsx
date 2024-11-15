@@ -14,7 +14,7 @@ export default function Header() {
         roleMessage = 'Máš len základnú rolu, môžeš sa maximálne odhlásiť.';
         break;
       case 'guest':
-        roleMessage = 'Si tu hosť. Môžeš udalosti len sledovať, ale nič viac.';
+        roleMessage = 'Si len hosť. Môžeš udalosti len sledovať, ale nič viac.';
         break;
       case 'user':
         roleMessage = `Vitaj ${user?.displayName}! Teraz môžeš vytvárať udalosti a upravovať ich.`;
